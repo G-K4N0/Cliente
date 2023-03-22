@@ -1,0 +1,12 @@
+.containerInicio {
+    height: auto;
+    max-width: 940px;
+}
+
+.containerInicio  {
+    display: grid;
+    column-gap:auto;
+    grid-template-columns: repeat(auto-fit,minmax(460px,1fr));
+    gap: 20px;
+    margin: 5px;
+}

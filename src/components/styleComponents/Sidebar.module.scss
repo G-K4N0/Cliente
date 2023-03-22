@@ -1,0 +1,35 @@
+$naranja:#ff7300;
+$ancho:200px;
+$alto:100%;
+$borde:#c4ccde;
+$fondo:#000428;
+$fondoGradiente1: -webkit-linear-gradient(to right, #004e92, #000428);
+$fondoGradiente2: linear-gradient(to right, #004e92, #000428);
+.container
+{
+    display: flex;
+}
+.sidebar{
+    border-radius: 0 20px 20px 0;
+    background: $fondo;
+    width: 14rem;
+    height: calc(100vh - 52px);
+    border-right: 1px solid $borde;
+    min-height: 390px;
+
+    ul {
+        list-style: none;
+        padding: 1rem 2rem;
+        li {
+            margin-bottom: 1rem;
+            a{
+                text-decoration: none;
+                color: $naranja;
+            }
+        }
+    }
+}
+
+.outletDash{
+    width: 100vw;
+}

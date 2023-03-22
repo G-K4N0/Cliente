@@ -1,0 +1,62 @@
+.containerDetails{
+    height:150px ;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-left: 5px;
+    margin-right: 15px;
+}
+
+.containerImage{
+    width: fit-content;
+    align-content: flex-start;
+    padding: 0.1rem;
+}
+
+.containerImage img {
+    border-radius: 25px;
+    width: 120px;
+    height: 120px;
+    margin-left: 10%;
+}
+
+.scheduleContainer{
+    border-radius: 25px;
+    width: 160px;
+    height: 150px;
+}
+
+.scheduleTitle {
+
+    color: azure;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 14px;
+    padding: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.hour{
+    
+    border-radius: 25px;
+    width: 100%;
+    height: 27px;
+    color: beige;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    h3 {
+        background: #363535;
+        border-radius: 25px;
+        width: 80%;
+    }
+}
+
+.franja{
+    background:#1a1919;
+    min-width: 10px;
+    height: 90%;
+    border-radius: 25px;
+}

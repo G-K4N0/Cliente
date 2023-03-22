@@ -1,0 +1,44 @@
+$fondo:#000428;
+$fondoGradiente1: -webkit-linear-gradient(to right, #004e92, #000428);
+$fondoGradiente2: linear-gradient(to right, #004e92, #000428); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+$naranja:#ff7300;
+.nav_container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: $fondo;
+    background: $fondoGradiente1;
+    background: $fondoGradiente2;
+    /*background: #020432;*/
+    height: 50px;
+    border: solid 1px $naranja;
+    min-width: 470px;
+    border-radius: 0 20px 20px 0;
+}
+
+.LogoName{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    text-decoration: none;
+    color:$naranja; 
+}
+
+.nav_container img{
+    border-radius: 25px;
+    margin-left: 40px;
+    margin-top: 1px;
+    margin-bottom: 2px;
+}
+
+.nav_container ul{
+    list-style: none;
+    margin-right: 30px;
+    margin-left: -35px;
+}
+
+.Link {
+    text-decoration: none;
+    color:$naranja;
+}
+

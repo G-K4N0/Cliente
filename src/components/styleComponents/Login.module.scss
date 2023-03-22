@@ -1,0 +1,122 @@
+$fondo:#000428;
+$fondoGradiente1: -webkit-linear-gradient(to right, #004e92, #000428);
+$fondoGradiente2: linear-gradient(to right, #004e92, #000428); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+$naranja:#ff7300;
+$valid:limegreen;
+$invalid: red;
+
+.divContent{
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 470px;
+    min-height: 500px;
+    background: $fondo;
+}
+
+
+.container{
+    border-radius: 25px;
+    color: $naranja;
+    background: $fondo;
+    background: $fondoGradiente1;
+    background: $fondoGradiente2;
+    height: calc(100vh - 52px);
+    width: 100%;
+    max-width: 420px;
+    min-height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+}
+
+.container form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    flex-grow: 1;
+    padding-bottom: 1rem;
+}
+
+.container a, a:visited{
+    color: $naranja;
+}
+
+.container input[type="text"], input[type="password"], button, textarea {
+    font-family: sans-serif;
+    font-size: 22px;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    border: solid 1px $naranja;
+}
+
+.container label, button {
+    margin-top: 0.5rem;
+}
+
+.container label{
+    font-size: 30px;
+}
+
+.container h1 {
+    font-size: 60px;
+}
+.container button {
+    padding: 1rem;
+    color: $naranja;
+    background: $fondo;
+}
+
+.container button:hover {
+    color: $naranja;
+    background: $fondo;
+    background: $fondoGradiente1;
+    background: $fondoGradiente2;
+}
+
+.instructions {
+    font-size: 0.75rem;
+    border-radius: 0.5rem;
+    background: $fondo;
+    color: $naranja;
+    padding: 0.25rem;
+    position: relative;
+    bottom: -10px;
+}
+
+.instructions > svg{
+    margin-right: 0.25rem;
+}
+
+.offscreen{
+    position: absolute;
+    left: -9999px;
+}
+
+.hide{
+    display: none;
+}
+
+.valid{
+    color: $valid;
+    margin-left: 0.25rem;
+}
+.invalid{
+    color: $invalid;
+    margin-left: 0.25rem;
+}
+
+.errmsg{
+    background: lightpink;
+    color: firebrick;
+    font-weight: bold;
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.line{
+    display: inline-block;
+}
