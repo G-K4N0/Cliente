@@ -1,19 +1,15 @@
-import { useEffect, useState } from 'react'
-import { getAllLabsRequest } from '../../../services/usarLab.js'
-export function Labs () {
-  const [labs, setLabs] = useState([])
+import { Agregar } from './Agregar'
+import { Lab } from './Lab'
 
-  useEffect(() => {
-    const getLabs = async () => {
-      const datosLabs = await getAllLabsRequest()
-      setLabs(datosLabs.data)
-    }
-    getLabs()
-  }, [])
+export function Labs () {
   return (
-  <div>
-    {labs.map(lab => (
-      <h1 key={lab.id} > { lab.name }</h1>
-    ))}
-  </div>)
+    <div className="container">
+      <div className="container">
+        <Agregar />
+      </div>
+      <div>
+        <Lab />
+      </div>
+    </div>
+  )
 }
