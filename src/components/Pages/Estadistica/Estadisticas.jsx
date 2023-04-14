@@ -1,3 +1,9 @@
+import LabsDocente from './LabsDocente'
+
 export function Estadisticas () {
-  return <div>Estadisticas</div>
+  return (
+    <div className='container'>
+      <LabsDocente />
+    </div>
+  )
 }
