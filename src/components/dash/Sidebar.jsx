@@ -6,7 +6,7 @@ export function Sidebar () {
           <li> <Link to="inicio">Inicio</Link></li>
           <li> <Link to="usuarios">Usuarios</Link> </li>
           <li> <Link to="materias"> Materias </Link></li>
-          <li> <Link to="carreras"> Carreras </Link></li>
+          <li> <Link to="grupos"> Grupos </Link></li>
           <li> <Link to="labs"> Labroratorios </Link></li>
           <li> <Link to="horarios"> Horarios </Link></li>
           <li> <Link to="avisos"> Avisos </Link></li>
