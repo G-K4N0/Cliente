@@ -2,11 +2,11 @@ import { Materia } from './Materia.jsx'
 import { Agregar } from './Agregar.jsx'
 export const Materias = () => {
   return (
-    <div>
-      <div>
+    <div className='container'>
+      <div className='container'>
         <Agregar />
       </div>
-    <div>
+    <div >
       <Materia />
     </div>
     </div>
