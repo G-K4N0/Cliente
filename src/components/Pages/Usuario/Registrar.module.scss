@@ -14,9 +14,6 @@ $invalid: red;
 .btnShow{
     color: $naranja;
     background:$fondo;
-    position: fixed;
-    top: 35px;
-    right: 1px;
 }
 
 .float{
@@ -54,9 +51,10 @@ $invalid: red;
     color: $naranja;
 }
 
-.container input[type="text"], input[type="password"], button, textarea, select  {
+.registerForm  {
     font-family: sans-serif;
     font-size: 22px;
+    height: 30px;
     padding: 0.25rem;
     border-radius: 0.5rem;
     border: solid 1px $naranja;
