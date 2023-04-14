@@ -1,22 +1,19 @@
-import { useRef, useState, useEffect, useContext } from 'react'
-import { useNavigate } from 'react-router-dom'
-import AuthContext from '../../context/AuthProvider'
+import { useState, useEffect } from 'react'
+import useAuth from '../../hooks/useAuth'
+import { useNavigate, useLocation } from 'react-router-dom'
 import login from '../../services/login'
 import styles from '../styleComponents/Login.module.scss'
 
 export const Login = () => {
-  const { setAuth } = useContext(AuthContext)
-  const userRef = useRef()
-  const errRef = useRef()
+  const { setAuth } = useAuth()
   const navigate = useNavigate()
+  const location = useLocation()
+  const from = location.state?.from?.pathname || '/dashboard'
 
   const [user, setUser] = useState('')
   const [pwd, setPwd] = useState('')
   const [errMsg, setErrMsg] = useState('')
-
-  useEffect(() => {
-    userRef.current.focus()
-  }, [])
+  const [showPwd, setShowPwd] = useState(false)
 
   useEffect(() => {
     setErrMsg('')
@@ -25,59 +22,102 @@ export const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault()
     try {
-      const response = await login({ nickname: user, password: pwd })
-      const hasToken = response?.data?.token
-      setAuth({ token: hasToken })
+      const response = await login({ user, password: pwd })
+      const token = response?.data?.token
+      const roles = [response?.data?.rol]
+      setAuth({ user, pwd, roles, token })
       setUser('')
       setPwd('')
-      hasToken && navigate('/dashboard')
+      navigate(from, { replace: true })
     } catch (error) {
       if (!error?.response) {
         setErrMsg('El servidor no responde')
       } else if (error.response?.status === 400) {
         setErrMsg('Usuario y/o contraseña incorrectos')
       } else if (error.response?.status === 401) {
-        setErrMsg('Sin autorización')
+        setErrMsg('Usuario no autorizado')
       } else {
         setErrMsg('Inicio fallido')
       }
-      errRef.current.focus()
     }
   }
 
+  const togglePwdVisibility = () => {
+    setShowPwd((prevShowPwd) => !prevShowPwd)
+  }
+
   return (
-    <div className={styles.divContent}>
-      <section className={styles.container}>
-        <p
-          ref={errRef}
-          className={errMsg ? styles.errMsg : styles.offscreen}
-          aria-live="assertive"
-        >
-          {errMsg}
-        </p>
-        <h1>Iniciar Sesión</h1>
-        <form onSubmit={handleLogin}>
-          <label htmlFor="username">Usuario</label>
-          <input
-            type="text"
-            id="username"
-            ref={userRef}
-            autoComplete="off"
-            onChange={(e) => setUser(e.target.value)}
-            value={user}
-            required
-          />
-          <label htmlFor="password">Contraseña</label>
-          <input
-            type="password"
-            id="password"
-            onChange={(e) => setPwd(e.target.value)}
-            value={pwd}
-            required
-          />
-          <button>Iniciar Sesión</button>
-        </form>
-      </section>
+    <div className={styles.overlay}>
+
+      <form onSubmit={handleLogin} className={styles.formulario}>
+        <div className={styles.con}>
+          <p
+            className={errMsg ? styles.errMsg : styles.offscreen}
+            aria-live="assertive"
+          >
+            {errMsg}
+          </p>
+          <header className={styles.head_form}>
+            <h2>Inicio de Sesión</h2>
+          </header>
+
+          <br />
+          <div className={styles.field_set}>
+            <span className={styles.input_item}>
+              <i className="fa fa-user-circle"></i>
+            </span>
+
+            <input
+              className={`${styles.form_input} ${styles.txt_input}`}
+              id=""
+              type="text"
+              placeholder="Usuario"
+              onChange={(e) => setUser(e.target.value)}
+              value={user}
+              autoComplete="off"
+              required
+            />
+
+            <br />
+
+            <span className={styles.input_item}>
+              <i className="fa fa-key"></i>
+            </span>
+
+            <input
+              className={styles.form_input}
+              type={showPwd ? 'text' : 'password'}
+              placeholder="Password"
+              id="pwd"
+              name="password"
+              onChange={(e) => setPwd(e.target.value)}
+              value={pwd}
+              autoComplete="off"
+              required
+            />
+
+            <span>
+              <i
+                className={`fa ${showPwd ? 'fa-eye-slash' : 'fa-eye'} ${
+                  styles.eye
+                }`}
+                aria-hidden="true"
+                type="button"
+                onClick={togglePwdVisibility}
+              ></i>
+            </span>
+
+            <br />
+
+            <button
+              type="submit"
+              className={ styles.button_login }
+            >
+              Iniciar Sesión
+            </button>
+          </div>
+        </div>
+      </form>
     </div>
   )
 }
