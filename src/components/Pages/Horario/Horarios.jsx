@@ -1,8 +1,15 @@
-import { GetHorario } from './getHorarios.jsx'
+import { Agregar } from './Agregar.jsx'
+import { Horario } from './Horario.jsx'
 export function Horarios () {
   return (
     <div>
-      <GetHorario />
+      <div>
+      <Agregar />
+      </div>
+
+      <div>
+        <Horario />
+      </div>
     </div>
   )
 }

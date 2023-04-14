@@ -1,0 +1,38 @@
+$fondo:#000428;
+$fondoGradiente1: -webkit-linear-gradient(to right, #004e92, #000428);
+$fondoGradiente2: linear-gradient(to right, #004e92, #000428); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+$naranja:#ff7300;
+$valid:limegreen;
+$invalid: red;
+
+.formulario {
+    margin-top: -2rem;
+    margin-left: -0.4rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: $fondo;
+    background: $fondoGradiente1;
+    background: $fondoGradiente2;
+    width: 15rem;
+    color: $naranja;
+    height: 100vh;
+  }
+  
+  .labels {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+  
+  .input_select{
+    width: 5.3rem;
+    height: 2rem;
+    padding: 2px;
+    border-radius: 5px;
+    margin-top: 5px;
+    font-size: small;
+  }
+ 
+  
