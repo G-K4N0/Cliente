@@ -1,0 +1,29 @@
+$fondo: #000428;
+$fondoGradiente1: -webkit-linear-gradient(to right, #004e92, #000428);
+$fondoGradiente2: linear-gradient(to right, #004e92, #000428);
+$naranja: #ff7300;
+$valid: limegreen;
+$invalid: red;
+
+.fondo {
+  background: $fondo;
+  background: $fondoGradiente1;
+  background: $fondoGradiente2;
+  color: $naranja;
+  padding: 2%;
+  justify-content: space-around;
+}
+
+.ancho {
+  width: 15rem;
+  margin: 0.5rem 0.5rem 0.5rem 1.5rem;
+}
+
+.encabezado {
+  height: 10px;
+  vertical-align: middle;
+}
+.titulo {
+  font-size: 32px;
+  font-style: bold;
+}
