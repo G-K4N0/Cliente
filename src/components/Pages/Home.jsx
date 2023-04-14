@@ -1,39 +1,40 @@
 import { Card } from '../Card/Card'
 import { useEffect, useState } from 'react'
-import { getAllHorarioRequest } from '../../services/horario'
-
+import useAxiosPrivate from '../../hooks/useAxiosPrivate'
 export function Home () {
   const [horarios, setHorarios] = useState([])
-
+  const axiosPrivate = useAxiosPrivate()
   useEffect(() => {
     async function horarios () {
-      try {
-        const horas = await getAllHorarioRequest()
-        setHorarios(horas.data)
-      } catch (error) {
-        console.log(error)
-      }
+      axiosPrivate
+        .get('/')
+        .then((response) => {
+          setHorarios(response.data)
+        })
+        .catch((error) => {
+          console.log(error)
+        })
     }
 
     horarios()
-  }, [])
+  }, [axiosPrivate])
   return (
-
     <div>
-      { horarios.map(horario => (
-        <Card key={horario.id}
-        inicio={ horario.timeInit }
-        fin = { horario.timeEnd }
-        grupo = { horario.grupo.name }
-        semestre = {horario.grupo.semestre.semester}
-        status = {horario.lab.status}
-        usuario = {horario.name}
-        laboratorio = {horario.lab.name}
-        materia = {horario.materium.name}
-        carrera = {horario.grupo.carrera.name}
-        imagen = {horario.usuario.imagenUrl}
+      {horarios.map((horario) => (
+        <Card
+          key={horario.id}
+          inicio={horario.inicia}
+          fin={horario.finaliza}
+          grupo={horario.grupo.name}
+          semestre={horario.grupo.semestre.name}
+          status={horario.lab.ocupado}
+          usuario={horario.usuario.name}
+          laboratorio={horario.lab.name}
+          materia={horario.materium.name}
+          carrera={horario.grupo.carrera.name}
+          imagen={horario.usuario.image.url}
         />
-      )) }
+      ))}
     </div>
   )
 }
