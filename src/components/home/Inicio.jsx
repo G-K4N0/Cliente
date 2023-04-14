@@ -30,7 +30,6 @@ export function Inicio () {
         console.log(error)
       }
     }
-
     obtenerHorarios()
   }, [axiosPrivate])
 
@@ -71,7 +70,7 @@ export function Inicio () {
 
   return (
     <div>
-      <BarraNavegacion />
+      <BarraNavegacion login="Iniciar sesión" />
       <div className={styles.containerInicio}>
         {horarios.map((horario) => {
           const enRango = estaEnRango(
