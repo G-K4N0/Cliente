@@ -1,47 +1,104 @@
-import { useEffect, useState } from 'react'
-import { getAllHorarioRequest } from '../../services/horario'
+import React, { useEffect, useState } from 'react'
 import styles from '../styleComponents/Inicio.module.scss'
 import { Card } from '../Card/Card'
-import { Navbar } from './Navbar'
+import { BarraNavegacion } from './Navbar'
+import useAxiosPrivate from '../../hooks/useAxiosPrivate'
 
 export function Inicio () {
   const [horarios, setHorarios] = useState([])
+  const axiosPrivate = useAxiosPrivate()
+  const [currentTime, setCurrentTime] = useState(
+    new Date().toLocaleTimeString()
+  )
 
   useEffect(() => {
-    async function horarios () {
+    const timer = setInterval(() => {
+      setCurrentTime(new Date().toLocaleTimeString())
+    }, 1000)
+
+    return () => {
+      clearInterval(timer)
+    }
+  }, [])
+
+  useEffect(() => {
+    async function obtenerHorarios () {
       try {
-        const horas = await getAllHorarioRequest()
+        const horas = await axiosPrivate.get('/')
         setHorarios(horas.data)
       } catch (error) {
         console.log(error)
       }
     }
 
-    horarios()
-  }, [])
+    obtenerHorarios()
+  }, [axiosPrivate])
 
   if (!horarios) return null
 
+  const estaEnRango = (horaActual, inicio, fin) => {
+    const horaInicioParts = inicio.split(':')
+    const horaFinParts = fin.split(':')
+    const horaActualParts = horaActual.split(':')
+
+    const horaInicio = new Date(
+      1970,
+      0,
+      1,
+      parseInt(horaInicioParts[0]),
+      parseInt(horaInicioParts[1]),
+      0
+    )
+    const horaFin = new Date(
+      1970,
+      0,
+      1,
+      parseInt(horaFinParts[0]),
+      parseInt(horaFinParts[1]),
+      0
+    )
+    const horaActualDate = new Date(
+      1970,
+      0,
+      1,
+      parseInt(horaActualParts[0]),
+      parseInt(horaActualParts[1]),
+      0
+    )
+
+    return horaActualDate >= horaInicio && horaActualDate <= horaFin
+  }
+
   return (
     <div>
-      <Navbar />
+      <BarraNavegacion />
       <div className={styles.containerInicio}>
-        {
-          horarios.map((item) => (
-            <Card key={item.id}
-            inicio = {item.timeInit}
-            fin = {item.timeEnd}
-            grupo = {item.grupo.name}
-            semestre = {item.grupo.semestre.semester}
-            status = {item.lab.status}
-            usuario = {item.usuario.name}
-            laboratorio = {item.lab.name}
-            materia = {item.materium.name}
-            carrera = {item.grupo.carrera.name}
-            imagen = {item.usuario.imageUrl}
-            />
-          ))
-        }
+        {horarios.map((horario) => {
+          const enRango = estaEnRango(
+            currentTime,
+            horario.inicia,
+            horario.finaliza
+          )
+          if (enRango) {
+            return (
+              <Card
+                key={horario.id}
+                inicio={horario.inicia}
+                fin={horario.finaliza}
+                grupo={horario.grupo.name}
+                semestre={horario.grupo.semestre.semester}
+                status={horario.lab.status}
+                usuario={horario.usuario.name}
+                laboratorio={horario.lab.name}
+                materia={horario.materium.name}
+                carrera={horario.grupo.carrera.name}
+                imagen={horario.usuario.image.url}
+              />
+            )
+          } else {
+            return null
+          }
+        })}
       </div>
     </div>
   )
