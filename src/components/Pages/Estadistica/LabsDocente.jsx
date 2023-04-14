@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { PieChart, Pie, Sector } from 'recharts'
-
 const data = [
   { name: 'Laboratorio 1', value: 400 },
   { name: 'Laboratorio 2', value: 300 },
@@ -88,7 +87,7 @@ const LabsDocentes = () => {
   }
 
   return (
-    <PieChart width={400} height={400}>
+    <PieChart width={500} height={400}>
       <Pie
         activeIndex={activeIndex}
         activeShape={renderActiveShape}
