@@ -1,12 +1,10 @@
 import axios from 'axios'
-
-const BASE_URL = 'https://centroapi.azurewebsites.net'
-
+const apiUrl = process.env.REACT_APP_API_URL
 export const axiosCustom = axios.create({
-  baseURL: BASE_URL
+  baseURL: apiUrl
 })
 
 export const axiosPrivate = axios.create({
-  baseURL: BASE_URL,
+  baseURL: apiUrl,
   headers: { 'Content-Type': 'multipart/mixed' }
 })

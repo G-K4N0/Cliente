@@ -1,9 +1,8 @@
 import axios from 'axios'
-
-const baseUrl = 'https://centroapi.azurewebsites.net/login'
+const apiUrl = process.env.REACT_APP_API_URL
 
 const login = async (credentials) => {
-  const response = await axios.post(baseUrl, credentials, {
+  const response = await axios.post(`${apiUrl}/login`, credentials, {
     withCredentials: true
   })
   return response
