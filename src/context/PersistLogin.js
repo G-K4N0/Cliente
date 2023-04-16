@@ -22,12 +22,6 @@ const PersistLogin = () => {
     !auth?.token ? verifyRefreshToken() : setIsLoading(false)
   }, [auth?.token, refresh])
 
-  useEffect(() => {
-    console.log(`is Loading ${isLoading}`)
-    console.log(`token ${auth?.token}`)
-    console.log(`Rol -> ${auth?.rol}`)
-  }, [isLoading, auth])
-
   return <>{isLoading ? <Cargando /> : <Outlet />}</>
 }
 
