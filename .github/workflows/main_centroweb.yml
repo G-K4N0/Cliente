@@ -52,5 +52,5 @@ jobs:
         with:
           app-name: 'centroweb'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_42121F97D21846C0A472D256F83CC51E }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_8A649883AA38403F8D4F8212C2B5D525 }}
           package: .
