@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { Button, Modal, Form } from 'react-bootstrap'
 import useAxiosPrivate from '../../../hooks/useAxiosPrivate'
-import { SuccessAlert } from '../../Alerts/Success'
 export const CrearAviso = ({ show, onHide }) => {
   const [titulo, setTitulo] = useState('')
   const [detalles, setDetalles] = useState('')
@@ -11,9 +10,12 @@ export const CrearAviso = ({ show, onHide }) => {
   const handleSubmit = (e) => {
     e.preventDefault()
 
-    const data = { titulo, detalles }
-    axiosPrivate.post('/avisos', data).then(response => {
-      <SuccessAlert mensaje={response.data} />
+    const dataForm = new FormData()
+    dataForm.append('titulo', titulo)
+    dataForm.append('detalles', detalles)
+
+    axiosPrivate.post('/avisos', dataForm).then(response => {
+      console.log(response.data)
     })
     handleClose()
   }
