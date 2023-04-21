@@ -1,25 +1,30 @@
 import React from 'react'
 import styles from '../styleComponents/Card.module.scss'
 import { Details } from './Details'
-export function Card (props) {
+export function Card ({ id, laboratorio, materia, inicio, fin, grupo, semestre, status, imagen, carrera, usuario }) {
   return (
-    <div id={props.id} className={styles.cardContainer}>
+    <div id={id} className={styles.cardContainer}>
       <div className={styles.nameLab}>
-        <h1>{props.laboratorio}</h1>
+        <h1>{laboratorio}</h1>
       </div>
       <div className={styles.materiaName}>
-        <h3>{props.materia}</h3>
+        <h3>{materia}</h3>
       </div>
       <Details
-        inicio={props.inicio}
-        fin={props.fin}
-        grupo={props.grupo}
-        semestre={props.semestre}
-        status={props.status}
-        usuario={props.usuario}
-        imagen={props.imagen}
+        inicio={inicio}
+        fin={fin}
+        grupo={grupo}
+        semestre={semestre}
+        status={status}
+        usuario={usuario}
+        imagen={imagen}
       />
-      <p className={styles.cardCareer}>{props.carrera}</p>
+      <div className={styles.ocupado}>
+          <p>Ocupado</p>
+        </div>
+        <div className={styles.cardCareer}>
+        <p>{carrera}</p>
+        </div>
     </div>
   )
 }
