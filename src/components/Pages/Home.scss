@@ -1,0 +1,8 @@
+.disposicion {
+  display: grid;
+  justify-content: space-between;
+  grid-template-columns: repeat(3, 1fr);
+  height: calc(100vh - 52px);
+  min-height: 390px;
+  overflow: scroll;
+}
