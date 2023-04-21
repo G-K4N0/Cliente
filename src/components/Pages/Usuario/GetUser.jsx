@@ -14,7 +14,8 @@ const Users = () => {
   const [showForm, setShowForm] = useState(false)
   const [showEdit, setShowEdit] = useState(false)
   const [updateTable, setUpdateTable] = useState(false)
-  const [error, setError] = useState(null)
+  const [showError, setShowError] = useState(false)
+  const [mensaje, setMensaje] = useState('')
 
   const axiosPrivate = useAxiosPrivate()
   const navigate = useNavigate()
@@ -29,8 +30,13 @@ const Users = () => {
           setUpdateTable(false)
         })
         .catch((error) => {
-          setError(error)
-          navigate('/login', { state: { from: location }, replace: true })
+          if (!error?.response) {
+            setMensaje('El servidor no responde')
+          } else if (error.response?.status === 401) {
+            setMensaje('La sesión ha caducado')
+            setShowError(true)
+            navigate('/login', { state: { from: location }, replace: true })
+          }
         })
     }
     getUsers()
@@ -44,11 +50,11 @@ const Users = () => {
     return axiosPrivate
       .delete(`/usuarios/${id}`)
       .then((response) => {
-        console.log(response.status)
         setUpdateTable(true)
       })
       .catch((error) => {
-        alert(error)
+        setMensaje(error)
+        setShowError(true)
       })
   }
 
@@ -64,7 +70,11 @@ const Users = () => {
 
   return (
     <div className="container table-responsive">
-      {error && <ErrorAlert error={error} />}
+      <ErrorAlert
+      error={mensaje}
+      show={showError}
+      setShow={setShowError}
+      />
       <Table
         responsive
         striped
@@ -78,7 +88,6 @@ const Users = () => {
             <th className="text-center">Imagen</th>
             <th className="text-center">Nombre</th>
             <th className="text-center">Usuario</th>
-            <th className="text-center">Contraseña</th>
             <th className="text-center">Privilegio</th>
             <th className="text-center"></th>
             <th className="text-center">
@@ -109,7 +118,6 @@ const Users = () => {
           {usuarios.map((usuario) => (
             <tr key={usuario.id}>
               <td>
-                {' '}
                 <img
                   src={usuario.image ? usuario.image.url : ' '}
                   alt=""
@@ -119,7 +127,6 @@ const Users = () => {
               </td>
               <td className="text-center"> {usuario.name}</td>
               <td className="text-center"> {usuario.user}</td>
-              <td className="text-center"> {usuario.password} </td>
               <td className="text-center"> {usuario.privilegio.name} </td>
               <td className="text-center">
                 {!showEdit

@@ -14,7 +14,11 @@ export const Grupo = () => {
   useEffect(() => {
     axiosPrivate('/grupos')
       .then((response) => {
-        setGrupos(response.data)
+        if (Object.keys(response.data).length === 0) {
+          console.log('No hay datos que mostrar')
+        } else {
+          setGrupos(response.data)
+        }
       })
       .catch((error) => {
         console.log(error)

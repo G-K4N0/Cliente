@@ -83,6 +83,7 @@ export const Agregar = ({ setUpdateTable, showAgregar, handleCancel, setShowAgre
         setTipo('')
         setUpdateTable(true)
         setShowAgregar(false)
+        console.log(response.data)
       })
       .catch((error) => {
         console.log(error)

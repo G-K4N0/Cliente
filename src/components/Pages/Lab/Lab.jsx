@@ -5,6 +5,8 @@ import { Editar } from './Editar.jsx'
 import { useNavigate } from 'react-router-dom'
 import useAxiosPrivate from '../../../hooks/useAxiosPrivate.js'
 import useAuth from '../../../hooks/useAuth.js'
+import { SuccessAlert } from '../../Alerts/Success.jsx'
+import { ErrorAlert } from '../../Alerts/Error.jsx'
 
 export function Lab () {
   const navigate = useNavigate()
@@ -15,16 +17,29 @@ export function Lab () {
   const [newStatusValue, setNewStatusValue] = useState('')
   const [renderTable, setRenderTable] = useState(false)
   const [isOcupado, setIsOcupado] = useState(false)
+  const [mensaje, setMensaje] = useState('')
+  const [showError, setShowError] = useState(false)
+  const [showSucces, setShowSucces] = useState(false)
   const axiosPrivate = useAxiosPrivate()
   useEffect(() => {
     axiosPrivate
       .get('/labs')
       .then((response) => {
-        setLabs(response?.data)
-        console.log(response?.data)
+        if (Object.keys(response.data).length === 0) {
+          setMensaje('Aun no hay datos en la base de datos')
+          setShowSucces(true)
+        } else {
+          setLabs(response?.data)
+        }
       })
       .catch((error) => {
-        console.log(error)
+        if (!error?.response) {
+          setMensaje('El servidor no responde')
+          setShowError(true)
+        } else if (error.response?.message) {
+          setMensaje(error.response.message)
+          setShowError(true)
+        }
       })
   }, [axiosPrivate])
 
@@ -37,14 +52,23 @@ export function Lab () {
       ocupado: newStatus
     }
     try {
-      const response = await axiosPrivate.put(`/labs/${selectedLabId}`, updateLab)
+      const response = await axiosPrivate.put(
+        `/labs/${selectedLabId}`,
+        updateLab
+      )
       const updatedLabs = labs.map((lab) =>
         lab.id === selectedLabId ? response.data : lab
       )
       setLabs(updatedLabs)
       setRenderTable(renderTable)
     } catch (error) {
-      alert(error)
+      if (!error?.response) {
+        setMensaje('El servidor no responde')
+        setShowError(true)
+      } else if (error.response?.message) {
+        setMensaje(error.response.message)
+        setShowError(true)
+      }
     }
   }
 
@@ -55,9 +79,21 @@ export function Lab () {
   const handleDelete = async (id) => {
     try {
       const response = await axiosPrivate.delete(`/labs/${id}`)
-      console.log(response.data)
+      if (!response?.message) {
+        setMensaje('El servidor no responde')
+        setShowError(true)
+      } else if (response?.message) {
+        setMensaje(response.message)
+        setShowSucces(true)
+      }
     } catch (error) {
-      alert('No es posible eliminar el elemento')
+      if (!error?.response) {
+        setMensaje('El servidor no responde')
+        setShowError(true)
+      } else if (error.response?.message) {
+        setMensaje(error.response.message)
+        setShowError(true)
+      }
     }
   }
 
@@ -65,22 +101,24 @@ export function Lab () {
     const dataForm = new FormData()
     if (isOcupado !== true) {
       dataForm.append('ocupado', true)
-      axiosPrivate.put(`/labs/${id}`, dataForm, useAuth).then(response => {
-        setIsOcupado(true)
-      }).catch(error => {
-        console.log(error)
-      })
+      axiosPrivate
+        .put(`/labs/${id}`, dataForm, useAuth)
+        .then((response) => {
+          setIsOcupado(true)
+        })
+        .catch((error) => {
+          setMensaje(error.response.data)
+        })
     } else {
       dataForm.append('ocupado', false)
       axiosPrivate
         .put(`/labs/${id}`, dataForm, useAuth)
         .then((response) => {
-          console.log(response.data)
           setIsOcupado(false)
         })
         .catch((error) => {
           if (error.response?.status === 401) {
-            alert(`${error.response.data}`)
+            setMensaje(error.response.data)
             navigate('/login')
           }
         })
@@ -98,7 +136,7 @@ export function Lab () {
       <td>
         <Button
           key={lab.id}
-          variant="danger"
+          variant='danger'
           onClick={() => {
             setShowModal(true)
             setSelectedLabId(lab.id)
@@ -111,7 +149,7 @@ export function Lab () {
         <Button
           key={lab.id}
           onClick={() => handleDelete(lab.id)}
-          variant="danger"
+          variant='danger'
         >
           Eliminar
         </Button>
@@ -121,6 +159,16 @@ export function Lab () {
 
   return (
     <div>
+      <SuccessAlert
+      mensaje={mensaje}
+      show={showSucces}
+      setShow={setShowSucces}
+      />
+      <ErrorAlert
+      error={mensaje}
+      show={showError}
+      setShow={setShowSucces}
+      />
       <Editar
         selectedMateriaId={selectedLabId}
         showModal={showModal}
@@ -132,7 +180,7 @@ export function Lab () {
         setNewStatusValue={setNewStatusValue}
         newStatusValue={newStatusValue}
       />
-      <Table responsive striped bordered hover variant="dark">
+      <Table responsive striped bordered hover variant='dark'>
         <thead>
           <tr>
             <th></th>
