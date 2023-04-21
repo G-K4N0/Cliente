@@ -1,26 +1,17 @@
-import React, { useState } from 'react'
 import Alert from 'react-bootstrap/Alert'
-import Button from 'react-bootstrap/Button'
+import styles from './Alerts.module.scss'
 
-export const SuccessAlert = ({ mensaje }) => {
-  const [show, setShow] = useState(true)
-
+export const SuccessAlert = ({ mensaje, show, setShow }) => {
   return (
-    <>
-      <Alert show={show} variant="success">
-        <Alert.Heading>How's it going?!</Alert.Heading>
-        <p>
-        {mensaje}
-        </p>
-        <hr />
-        <div className="d-flex justify-content-end">
-          <Button onClick={() => setShow(false)} variant="outline-success">
-            Close me y'all!
-          </Button>
-        </div>
+    <div className={styles.alertSucces}>
+      <Alert
+        show={show}
+        variant='success'
+        onClose={() => setShow(false)}
+        dismissible
+      >
+        <Alert.Heading> {mensaje} </Alert.Heading>
       </Alert>
-
-      {!show && <Button onClick={() => setShow(true)}>Show Alert</Button>}
-    </>
+    </div>
   )
 }
