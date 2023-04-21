@@ -1,7 +1,12 @@
 @import url('https://fonts.googleapis.com/css?family=Abel|Abril+Fatface|Alegreya|Arima+Madurai|Dancing+Script|Dosis|Merriweather|Oleo+Script|Overlock|PT+Serif|Pacifico|Playball|Playfair+Display|Share|Unica+One|Vibur');
 
+$inputColor:#BDBDBD;
 html,body{
   background: #2e2b2b;
   font-family: 'Vibur', cursive;
     font-family: 'Abel', sans-serif;
+}
+
+input{
+  background: $inputColor;
 }
