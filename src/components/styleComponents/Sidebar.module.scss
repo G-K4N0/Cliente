@@ -33,3 +33,20 @@ $fondoGradiente2: linear-gradient(to right, #004e92, #000428);
 .outletDash{
     width: 100vw;
 }
+
+.modify{
+border-radius: 0 20px 20px 0;
+background: #000428;
+width: 14rem;
+height: calc(100vh - 52px);
+border-right: 1px solid #c4ccde;
+min-height: 390px;
+position: fixed;
+top: auto;
+padding: 40px;
+  padding-top: 40px;
+  padding-right: 40px;
+  padding-bottom: 40px;
+  padding-left: 40px;
+display: none;
+}
