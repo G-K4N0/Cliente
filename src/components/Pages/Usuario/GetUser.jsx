@@ -40,7 +40,7 @@ const Users = () => {
         })
     }
     getUsers()
-  }, [axiosPrivate, location, location.search, navigate, updateTable])
+  }, [axiosPrivate, location, navigate, updateTable])
 
   const handleShowForm = () => {
     setShowForm(!showForm)
