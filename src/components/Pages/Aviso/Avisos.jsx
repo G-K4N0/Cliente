@@ -25,10 +25,10 @@ export const Avisos = () => {
           <Card.Header>{reporte.usuario.name}</Card.Header>
           <Card.Body>
             <Card.Text>
-              {reporte.note}
+              {reporte.problema}
             </Card.Text>
             <Card.Text>
-              {reporte.suggestion}
+              {reporte.descripcion}
             </Card.Text>
             <Button variant="primary">Revisado</Button>
           </Card.Body>

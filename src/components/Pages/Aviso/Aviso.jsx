@@ -11,7 +11,7 @@ export const Aviso = () => {
   }
 
   return (
-    <section>
+    <section className='container'>
       <div>
         <Button onClick={crearAviso}>Crear aviso</Button>
       </div>
