@@ -1,0 +1,33 @@
+.currentProperties {
+  height: 100%;
+  border-radius: 25px;
+  align-self: center;
+  background-color: rgb(183, 188, 192);
+  height: 100%;
+}
+
+.image-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.image {
+  align-self: center;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  object-fit: cover;
+  align-self: center;
+  border: 0.8rem solid green;
+  padding: inherit;
+}
+
+.titulo {
+  background-color: #020432;
+  color: #f7770f;
+  text-align: center;
+  font-size: xx-large;
+  font-weight: bolder;
+  margin: 1rem 3rem 1rem 3rem;
+  border-radius: 25px;
+}
