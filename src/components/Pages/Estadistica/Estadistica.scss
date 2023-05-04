@@ -1,4 +1,26 @@
 .container-custom{
-    width: fit-content;
-    justify-content: center;
+  overflow: scroll;
+  height: calc(100vh - 52px);
+}
+
+.columna {
+  width: 100%;
+}
+
+@media(min-width: 768px) {
+  .container-custom {
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 16px;
+  }
+
+  .columna {
+    width: calc(50% - 8px);
+  }
+}
+
+.title{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1rem;
 }
