@@ -14,12 +14,13 @@ export function Home () {
   useEffect(() => {
     function getHorarios () {
       axiosPrivate
-        .get('/')
+        .get('/horarios/dias')
         .then((response) => {
           if (Object.keys(response.data).length === 0) {
             setMensaje('No hay datos para mostrar')
             setShowSucces(true)
           } else {
+            console.log(response.data)
             setHorarios(response.data)
             setRenderHorarios(
               horarios.map((horario) => (
@@ -27,14 +28,13 @@ export function Home () {
                   key={horario.id}
                   inicio={horario.inicia}
                   fin={horario.finaliza}
-                  grupo={horario.grupo.name}
-                  semestre={horario.grupo.semestre.name}
-                  status={horario.lab.ocupado}
-                  usuario={horario.usuario.name}
-                  laboratorio={horario.lab.name}
-                  materia={horario.materium.name}
-                  carrera={horario.grupo.carrera.name}
-                  imagen={horario.usuario.image.url}
+                  grupo={horario.grupo}
+                  status={horario.ocupado}
+                  usuario={horario.docente}
+                  laboratorio={horario.laboratorio}
+                  materia={horario.materia}
+                  carrera={horario.carrera}
+                  imagen={horario.image.url}
                 />
               ))
             )
@@ -47,7 +47,7 @@ export function Home () {
     }
 
     getHorarios()
-  }, [axiosPrivate, setRenderHorarios, horarios])
+  }, [axiosPrivate, setRenderHorarios])
 
   return (
     <>
@@ -64,7 +64,7 @@ export function Home () {
          />
       </div>
 
-      <div className='container disposicion'>{renderHorarios}</div>
+      <div className='container-fluid  disposicion' >{renderHorarios}</div>
     </>
   )
 }
