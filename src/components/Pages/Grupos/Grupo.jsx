@@ -4,6 +4,8 @@ import useAxiosPrivate from '../../../hooks/useAxiosPrivate'
 import styles from './Grupos.module.scss'
 import { Agregar } from './Agregar'
 import { Editar } from './Editar'
+import { ErrorAlert } from '../../Alerts/Error'
+import { SuccessAlert } from '../../Alerts/Success'
 export const Grupo = () => {
   const [grupos, setGrupos] = useState([])
   const axiosPrivate = useAxiosPrivate()
@@ -11,17 +13,23 @@ export const Grupo = () => {
   const [showEditar, setShowEditar] = useState(false)
   const [updateTable, setUpdateTable] = useState(false)
   const [selected, setSelected] = useState([])
+  const [showSucces, setShowSucces] = useState(false)
+  const [showError, setShowError] = useState(false)
+  const [mensaje, setMensaje] = useState(false)
   useEffect(() => {
     axiosPrivate('/grupos')
       .then((response) => {
+        console.log(response.data)
         if (Object.keys(response.data).length === 0) {
-          console.log('No hay datos que mostrar')
+          setMensaje('Aún no has grupos para mostrar')
+          setShowSucces(true)
         } else {
           setGrupos(response.data)
         }
       })
       .catch((error) => {
-        console.log(error)
+        setMensaje(error)
+        setShowError(true)
       })
   }, [updateTable, axiosPrivate])
 
@@ -76,6 +84,16 @@ export const Grupo = () => {
   ))
   return (
     <div className="container">
+      <SuccessAlert
+      mensaje={mensaje}
+      show={showSucces}
+      setShow={setShowSucces}
+      />
+      <ErrorAlert
+      error={mensaje}
+      show={showError}
+      setShow={setShowError}
+      />
       <Editar
       showEditar={showEditar}
       setShowEditar={setShowEditar}
