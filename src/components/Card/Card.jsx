@@ -1,9 +1,22 @@
 import React from 'react'
 import styles from '../styleComponents/Card.module.scss'
 import { Details } from './Details'
-export function Card ({ id, laboratorio, materia, inicio, fin, grupo, semestre, status, imagen, carrera, usuario }) {
+export function Card ({
+  id,
+  laboratorio,
+  materia,
+  inicio,
+  fin,
+  grupo,
+  semestre,
+  status,
+  imagen,
+  carrera,
+  usuario
+}) {
+  const ocupado = (status === 0) ? 'Libre' : 'Ocupado'
   return (
-    <div id={id} className={styles.cardContainer}>
+    <div id={id} className={`container-fluid ${styles.cardContainer}`}>
       <div className={styles.nameLab}>
         <h1>{laboratorio}</h1>
       </div>
@@ -19,12 +32,20 @@ export function Card ({ id, laboratorio, materia, inicio, fin, grupo, semestre, 
         usuario={usuario}
         imagen={imagen}
       />
-      <div className={styles.ocupado}>
-          <p>Ocupado</p>
+      {ocupado === 'Libre'
+        ? (
+        <div className={styles.desOcupado}>
+          <p>{ocupado}</p>
         </div>
-        <div className={styles.cardCareer}>
+          )
+        : (
+        <div className={styles.ocupado}>
+          <p>{ocupado}</p>
+        </div>
+          )}
+      <div className={styles.cardCareer}>
         <p>{carrera}</p>
-        </div>
+      </div>
     </div>
   )
 }

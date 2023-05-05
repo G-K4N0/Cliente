@@ -12,11 +12,14 @@ export function BarraNavegacion ({ user, login }) {
   const axiosPrivate = useAxiosPrivate()
   const logout = () => {
     axiosPrivate.get('/logout').then(response => {
+      window.location.href = '/'
       console.log(response.data)
+    }).catch(error => {
+      console.log(error)
     })
   }
   const popover = (
-    <Popover id="popover-user" className={popstyle.pop}>
+    <Popover id="popover-user" className={popstyle.pop} variant='dark'>
       <Popover.Body>
         <div>
           <strong>Usuario </strong>
@@ -50,7 +53,7 @@ export function BarraNavegacion ({ user, login }) {
               {user
                 ? (
                 <OverlayTrigger
-                  trigger="click"
+                  trigger="focus"
                   placement="bottom"
                   overlay={popover}
                 >
