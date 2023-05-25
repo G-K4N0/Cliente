@@ -2,7 +2,6 @@ import React from 'react'
 import styles from '../styleComponents/Card.module.scss'
 import { Details } from './Details'
 export function Card ({
-  id,
   laboratorio,
   materia,
   inicio,
@@ -16,7 +15,7 @@ export function Card ({
 }) {
   const ocupado = (status === 0) ? 'Libre' : 'Ocupado'
   return (
-    <div id={id} className={`container-fluid ${styles.cardContainer}`}>
+    <div className={`container-fluid ${styles.cardContainer}`}>
       <div className={styles.nameLab}>
         <h1>{laboratorio}</h1>
       </div>
