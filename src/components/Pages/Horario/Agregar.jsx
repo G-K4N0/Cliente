@@ -37,9 +37,10 @@ export const Agregar = () => {
         console.log(error)
       })
     axiosPrivate
-      .get('/materias')
+      .get('/materias/addHorario')
       .then((response) => {
-        setMaterias(response.data)
+        console.log(response)
+        setMaterias(response?.data?.topic)
       })
       .catch((error) => {
         console.log(error)
@@ -83,20 +84,34 @@ export const Agregar = () => {
         setInicio('')
         setDia('')
         setFin('')
-        console.log(response.data.message)
+        const message = response.data?.message || ''
+
         if (
-          response.data?.message ===
-          'No pudes agregar la misma hora para el inicio y la finalización'
-        ) {
-          setMensaje(response.data.message)
-          setShowWarning(true)
-        } else if (response.data?.message.includes('Existe un horario')) {
-          setMensaje(response.data?.message)
-          setShowError(true)
-        } else if (response.data.message.includes('Incorrect integer value')) {
-          setMensaje(
-            'Revisa que estes seleccionando todas las opciones requeridas'
+          message.includes(
+            'No puedes agregar la misma hora para el inicio y la finalización'
           )
+        ) {
+          setMensaje(message)
+          setShowWarning(true)
+        } else if (message.includes('Existe un horario')) {
+          setMensaje(message)
+          setShowError(true)
+        } else if (message.includes('Incorrect integer value')) {
+          setMensaje(
+            'Revisa que estés seleccionando todas las opciones requeridas'
+          )
+          setShowError(true)
+        } else if (
+          message.includes('No puedes agregar una hora de finalización pasada')
+        ) {
+          setMensaje(message)
+          setShowError(true)
+        } else if (
+          message.includes(
+            'El usuario tiene asignado el mismo horario en el mismo día en otro laboratorio'
+          )
+        ) {
+          setMensaje(message)
           setShowError(true)
         }
       })
@@ -106,7 +121,7 @@ export const Agregar = () => {
       })
   }
   return (
-    <div className='container'>
+    <div>
       <SuccessAlert
         show={showSucces}
         setShow={setShowSucces}
@@ -119,7 +134,7 @@ export const Agregar = () => {
         mensaje={mensaje}
       />
       <form onSubmit={handleSubmit}>
-        <Table responsive variant='dark'>
+        <Table responsive variant="dark">
           <thead>
             <tr>
               <th>
@@ -128,20 +143,20 @@ export const Agregar = () => {
                   value={inicio}
                   onChange={(e) => setInicio(e.target.value)}
                 >
-                  <option value=''>Entrada</option>
-                  <option value='07:00'>07:00</option>
-                  <option value='08:00'>08:00</option>
-                  <option value='09:00'>09:00</option>
-                  <option value='10:00'>10:00</option>
-                  <option value='11:00'>11:00</option>
-                  <option value='12:00'>12:00</option>
-                  <option value='13:00'>13:00</option>
-                  <option value='14:00'>14:00</option>
-                  <option value='15:00'>15:00</option>
-                  <option value='16:00'>16:00</option>
-                  <option value='17:00'>17:00</option>
-                  <option value='18:00'>18:00</option>
-                  <option value='19:00'>19:00</option>
+                  <option value="">Entrada</option>
+                  <option value="07:00">07:00</option>
+                  <option value="08:00">08:00</option>
+                  <option value="09:00">09:00</option>
+                  <option value="10:00">10:00</option>
+                  <option value="11:00">11:00</option>
+                  <option value="12:00">12:00</option>
+                  <option value="13:00">13:00</option>
+                  <option value="14:00">14:00</option>
+                  <option value="15:00">15:00</option>
+                  <option value="16:00">16:00</option>
+                  <option value="17:00">17:00</option>
+                  <option value="18:00">18:00</option>
+                  <option value="19:00">19:00</option>
                 </select>
               </th>
               <th>
@@ -150,20 +165,20 @@ export const Agregar = () => {
                   value={fin}
                   onChange={(e) => setFin(e.target.value)}
                 >
-                  <option value=''>Salida</option>
-                  <option value='07:00'>07:00</option>
-                  <option value='08:00'>08:00</option>
-                  <option value='09:00'>09:00</option>
-                  <option value='10:00'>10:00</option>
-                  <option value='11:00'>11:00</option>
-                  <option value='12:00'>12:00</option>
-                  <option value='13:00'>13:00</option>
-                  <option value='14:00'>14:00</option>
-                  <option value='15:00'>15:00</option>
-                  <option value='16:00'>16:00</option>
-                  <option value='17:00'>17:00</option>
-                  <option value='18:00'>18:00</option>
-                  <option value='19:00'>19:00</option>
+                  <option value="">Salida</option>
+                  <option value="07:00">07:00</option>
+                  <option value="08:00">08:00</option>
+                  <option value="09:00">09:00</option>
+                  <option value="10:00">10:00</option>
+                  <option value="11:00">11:00</option>
+                  <option value="12:00">12:00</option>
+                  <option value="13:00">13:00</option>
+                  <option value="14:00">14:00</option>
+                  <option value="15:00">15:00</option>
+                  <option value="16:00">16:00</option>
+                  <option value="17:00">17:00</option>
+                  <option value="18:00">18:00</option>
+                  <option value="19:00">19:00</option>
                 </select>
               </th>
               <th>
@@ -172,13 +187,13 @@ export const Agregar = () => {
                   value={dia}
                   onChange={(e) => setDia(e.target.value)}
                 >
-                  <option value=''>Dias</option>
-                  <option value='Lunes'>Lunes</option>
-                  <option value='Martes'>Martes</option>
-                  <option value='Miércoles'>Miércoles</option>
-                  <option value='Jueves'>Jueves</option>
-                  <option value='Viernes'>Viernes</option>
-                  <option value='Sabado'>Sábado</option>
+                  <option value="">Dias</option>
+                  <option value="Lunes">Lunes</option>
+                  <option value="Martes">Martes</option>
+                  <option value="Miercoles">Miércoles</option>
+                  <option value="Jueves">Jueves</option>
+                  <option value="Viernes">Viernes</option>
+                  <option value="Sabado">Sábado</option>
                 </select>
               </th>
               <th>
@@ -187,7 +202,7 @@ export const Agregar = () => {
                   value={seleccionGrupo}
                   onChange={(e) => setSeleccionGrupo(e.target.value)}
                 >
-                  <option value=''>Grupos</option>
+                  <option value="">Grupos</option>
                   {grupos.map((grupo) => (
                     <option key={grupo.id} value={grupo.id}>
                       {grupo.name} - {grupo.tipo.name}
@@ -201,7 +216,7 @@ export const Agregar = () => {
                   value={seleccionMateria}
                   onChange={(e) => setSeleccionMateria(e.target.value)}
                 >
-                  <option value=''>Materias</option>
+                  <option value="">Materias</option>
                   {materias.map((materia) => (
                     <option key={materia.id} value={materia.id}>
                       {materia.name}
@@ -215,7 +230,7 @@ export const Agregar = () => {
                   value={seleccionLab}
                   onChange={(e) => setSeleccionLab(e.target.value)}
                 >
-                  <option value=''>Laboratorios</option>
+                  <option value="">Laboratorios</option>
                   {labs.map((lab) => (
                     <option key={lab.id} value={lab.id}>
                       {lab.name}
@@ -229,7 +244,7 @@ export const Agregar = () => {
                   value={seleccioUsuario}
                   onChange={(e) => setSeleccioUsuario(e.target.value)}
                 >
-                  <option value=''>Usuarios</option>
+                  <option value="">Usuarios</option>
                   {usuarios.map((usuario) => (
                     <option key={usuario.id} value={usuario.id}>
                       {usuario.name}
@@ -240,8 +255,8 @@ export const Agregar = () => {
               <th>
                 <Button
                   className={styles.input_select}
-                  type='submit'
-                  variant='primary'
+                  type="submit"
+                  variant="primary"
                 >
                   Enviar
                 </Button>
@@ -249,8 +264,8 @@ export const Agregar = () => {
               <th>
                 <Button
                   className={styles.input_select}
-                  type='button'
-                  variant='danger'
+                  type="button"
+                  variant="danger"
                 >
                   Cancelar
                 </Button>
