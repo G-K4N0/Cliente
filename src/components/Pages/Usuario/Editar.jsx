@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import styles from './Registrar.module.scss'
-import { axiosPrivate } from '../../../services/AxiosPrivate.js'
+import useAxiosPrivate from '../../../hooks/useAxiosPrivate'
 
 export function Editar (props) {
   const [name, setName] = useState(props.usuarioSeleccionado.name)
@@ -11,6 +11,7 @@ export function Editar (props) {
   const [originalValues, setOriginalValues] = useState({})
 
   const idUser = parseInt(props.usuarioSeleccionado.id)
+  const axiosPrivate = useAxiosPrivate()
 
   useEffect(() => {
     const getOriginalValues = async () => {
