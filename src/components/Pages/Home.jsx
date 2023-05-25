@@ -4,13 +4,27 @@ import useAxiosPrivate from '../../hooks/useAxiosPrivate'
 import './Home.scss'
 import { SuccessAlert } from '../Alerts/Success'
 import { ErrorAlert } from '../Alerts/Error'
+import { convertStringToTime } from '../../services/convertStringToTime.js'
+
 export function Home () {
   const [horarios, setHorarios] = useState([])
-  const [renderHorarios, setRenderHorarios] = useState('')
   const [showSucces, setShowSucces] = useState(false)
   const [showError, setShowError] = useState(false)
   const [mensaje, setMensaje] = useState('')
   const axiosPrivate = useAxiosPrivate()
+  const [time, setTime] = useState('')
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      /* const localTime = new Date()
+      const horaActual =
+        localTime.getTime() + localTime.getTimezoneOffset() * 6000 */
+      const hora = new Date()
+      setTime(hora.toLocaleTimeString('es-MX'))
+    }, 1000)
+    return () => clearInterval(interval)
+  }, [])
+
   useEffect(() => {
     function getHorarios () {
       axiosPrivate
@@ -20,24 +34,13 @@ export function Home () {
             setMensaje('No hay datos para mostrar')
             setShowSucces(true)
           } else {
-            console.log(response.data)
-            setHorarios(response.data)
-            setRenderHorarios(
-              horarios.map((horario) => (
-                <Card
-                  key={horario.id}
-                  inicio={horario.inicia}
-                  fin={horario.finaliza}
-                  grupo={horario.grupo}
-                  status={horario.ocupado}
-                  usuario={horario.docente}
-                  laboratorio={horario.laboratorio}
-                  materia={horario.materia}
-                  carrera={horario.carrera}
-                  imagen={horario.image.url}
-                />
-              ))
-            )
+            const horariosFiltrados = response.data.filter((horario) => {
+              return (
+                time > convertStringToTime(horario.inicia) &&
+                time < convertStringToTime(horario.finaliza)
+              )
+            })
+            setHorarios(horariosFiltrados)
           }
         })
         .catch((error) => {
@@ -47,7 +50,28 @@ export function Home () {
     }
 
     getHorarios()
-  }, [axiosPrivate, setRenderHorarios])
+  }, [axiosPrivate, time])
+
+  const elementos = horarios.length > 0
+    ? (
+        horarios.map((horario) => (
+      <Card
+        key={horario.id}
+        laboratorio={horario.laboratorio}
+        materia={horario.materia}
+        inicio={horario.inicia}
+        fin={horario.finaliza}
+        grupo={horario.grupo}
+        status={horario.ocupado}
+        imagen={horario.image.url}
+        carrera={horario.carrera}
+        usuario={horario.docente}
+      />
+        ))
+      )
+    : (
+    <h1>No hay horarios en Home</h1>
+      )
 
   return (
     <>
@@ -57,14 +81,9 @@ export function Home () {
           setShow={setShowSucces}
           mensaje={mensaje}
         />
-        <ErrorAlert
-        show={showError}
-        setShow={setShowError}
-        error={mensaje}
-         />
+        <ErrorAlert show={showError} setShow={setShowError} error={mensaje} />
       </div>
-
-      <div className='container-fluid  disposicion' >{renderHorarios}</div>
+      <div className="container-fluid  disposicion">{elementos}</div>
     </>
   )
 }
