@@ -1,22 +1,23 @@
 import React from 'react'
 import { Button, Popover, OverlayTrigger, Navbar } from 'react-bootstrap'
 import Container from 'react-bootstrap/Container'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import pantera from '../../imgs/pantera.png'
 import Nav from 'react-bootstrap/Nav'
 import styles from '../styleComponents/BarraNavegacion.module.scss'
 import popstyle from './Pop.module.scss'
-import useAxiosPrivate from '../../hooks/useAxiosPrivate'
+import { useLogOut } from '../../hooks/useLogOut'
 
 export function BarraNavegacion ({ user, login }) {
-  const axiosPrivate = useAxiosPrivate()
-  const logout = () => {
-    axiosPrivate.get('/logout').then(response => {
-      window.location.href = '/'
-      console.log(response.data)
-    }).catch(error => {
+  const navigate = useNavigate()
+  const logOut = useLogOut()
+  const logout = async () => {
+    try {
+      await logOut()
+      navigate('/')
+    } catch (error) {
       console.log(error)
-    })
+    }
   }
   const popover = (
     <Popover id="popover-user" className={popstyle.pop} variant='dark'>
