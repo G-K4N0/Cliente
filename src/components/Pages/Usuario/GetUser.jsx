@@ -13,9 +13,11 @@ const Users = () => {
   const [usuarioSeleccionado, setUsuarioSeleccionado] = useState({})
   const [showForm, setShowForm] = useState(false)
   const [showEdit, setShowEdit] = useState(false)
-  const [updateTable, setUpdateTable] = useState(false)
   const [showError, setShowError] = useState(false)
   const [mensaje, setMensaje] = useState('')
+  const [totalPages, setTotalPages] = useState(0)
+  const [currentPage, setCurrentPage] = useState(1)
+  const [updateTable, setUpdateTable] = useState(false)
 
   const axiosPrivate = useAxiosPrivate()
   const navigate = useNavigate()
@@ -24,9 +26,15 @@ const Users = () => {
   useEffect(() => {
     const getUsers = () => {
       return axiosPrivate
-        .get('/usuarios')
+        .get('/usuarios', {
+          params: {
+            page: currentPage,
+            limit: 9
+          }
+        })
         .then((response) => {
-          setUsuarios(response.data)
+          setUsuarios(response?.data?.users)
+          setTotalPages(response?.data?.totalPages)
           setUpdateTable(false)
         })
         .catch((error) => {
@@ -40,7 +48,7 @@ const Users = () => {
         })
     }
     getUsers()
-  }, [axiosPrivate, location, navigate, updateTable])
+  }, [axiosPrivate, location, navigate, currentPage, updateTable])
 
   const handleShowForm = () => {
     setShowForm(!showForm)
@@ -168,6 +176,24 @@ const Users = () => {
             </tr>
           ))}
         </tbody>
+        <tfoot>
+          <tr>
+            <td>
+              <button type="button" className="btn btn-secondary"
+            onClick={() => setCurrentPage(+2)}
+              >anterior</button>
+            </td>
+            <td>
+              <span>{currentPage} de {totalPages}</span>
+            </td>
+          <td>
+            <button type="button" className="btn btn-secondary"
+            onClick={() => setCurrentPage(+1)}
+            >
+            Siguiente</button>
+            </td>
+          </tr>
+        </tfoot>
       </Table>
     </div>
   )

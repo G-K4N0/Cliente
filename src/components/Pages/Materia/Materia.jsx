@@ -5,34 +5,44 @@ import { Editar } from './Editar.jsx'
 import useAxiosPrivate from '../../../hooks/useAxiosPrivate.js'
 import { SuccessAlert } from '../../Alerts/Success.jsx'
 import { ErrorAlert } from '../../Alerts/Error.jsx'
+import { Agregar } from './Agregar.jsx'
 
 export const Materia = () => {
   const [materias, setMaterias] = useState([])
   const [showModal, setShowModal] = useState(false)
   const [selectedMateriaId, setSelectedMateriaId] = useState(null)
   const [newValue, setNewValue] = useState('')
-  const [renderTable, setRenderTable] = useState(false)
-  const axiosPrivate = useAxiosPrivate()
   const [showSucces, setShowSucces] = useState(false)
   const [showError, setShowError] = useState(false)
   const [mensaje, setMensaje] = useState('')
+  const [totalPages, setTotalPages] = useState(0)
+  const [currentPage, setCurrentPage] = useState(1)
+  const axiosPrivate = useAxiosPrivate()
+  const [updateTable, setUpdateTable] = useState(false)
 
   useEffect(() => {
     axiosPrivate
-      .get('/materias')
+      .get('/materias', {
+        params: {
+          page: currentPage,
+          limit: 6
+        }
+      })
       .then((response) => {
         if (Object.keys(response.data).length === 0) {
           setMensaje('No hay materias aún')
           setShowSucces(true)
         } else {
-          setMaterias(response.data)
+          setMaterias(response?.data?.topics)
+          setTotalPages(response?.data?.totalPages)
+          setUpdateTable(false)
         }
       })
       .catch((error) => {
         setMensaje(error)
         setShowError(true)
       })
-  }, [axiosPrivate, renderTable])
+  }, [axiosPrivate, updateTable, currentPage])
 
   const handleEdit = async (event) => {
     event.preventDefault()
@@ -45,14 +55,16 @@ export const Materia = () => {
     try {
       const dataForm = new FormData()
       dataForm.append('name', updatedMateria.name)
-      const response = await axiosPrivate.put(`/materias/${selectedMateriaId}`, dataForm)
+      const response = await axiosPrivate.put(
+        `/materias/${selectedMateriaId}`,
+        dataForm
+      )
       const updatedMaterias = materias.map((materia) =>
         materia.id === selectedMateriaId ? response.data : materia
       )
       setMaterias(updatedMaterias)
       setShowModal(false)
-      setRenderTable((prev) => !prev)
-      setRenderTable(true)
+      setUpdateTable(true)
     } catch (error) {
       setMensaje(error)
       setShowError(true)
@@ -63,12 +75,15 @@ export const Materia = () => {
   }
 
   const handleDelete = async (id) => {
-    axiosPrivate.delete(`/materias/${id}`).then(response => {
-      setRenderTable(true)
-    }).catch(error => {
-      setMensaje(error)
-      setShowError(true)
-    })
+    axiosPrivate
+      .delete(`/materias/${id}`)
+      .then((response) => {
+        setUpdateTable(true)
+      })
+      .catch((error) => {
+        setMensaje(error)
+        setShowError(true)
+      })
   }
   const materiasRender = materias.map((materia) => (
     <tr key={materia.id}>
@@ -109,28 +124,56 @@ export const Materia = () => {
         setNewValue={setNewValue}
         newValue={newValue}
       />
-
       <SuccessAlert
-      show={showSucces}
-      setShow={setShowSucces}
-      mensaje={mensaje}
+        show={showSucces}
+        setShow={setShowSucces}
+        mensaje={mensaje}
       />
-
       <ErrorAlert
-      show={showError}
-      setShow={setShowError}
-      error={mensaje}
+        show={showError}
+        setShow={setShowError}
+        error={mensaje.toString()}
       />
-      <Table responsive striped bordered hover variant="dark">
+      <Agregar
+      setUpdateTable={setUpdateTable}
+      />
+      <Table responsive striped hover variant="dark">
         <thead>
           <tr>
             <th>id</th>
             <th>Materia</th>
-            <th></th>
-            <th></th>
           </tr>
         </thead>
         <tbody>{materiasRender}</tbody>
+        <tfoot>
+          <tr>
+            <td>
+              <Button
+                variant="secondary"
+                onClick={() => setCurrentPage(currentPage - 1)}
+                enabledd={currentPage === totalPages}
+                disabled={currentPage === 1}
+              >
+                {' '}
+                Anterior
+              </Button>
+            </td>
+            <td>
+              <span>
+                {currentPage} de {totalPages}
+              </span>
+            </td>
+            <td>
+              <Button
+                variant="secondary"
+                onClick={() => setCurrentPage(currentPage + 1)}
+                disabled={currentPage === totalPages}
+              >
+                Siguiente
+              </Button>
+            </td>
+          </tr>
+        </tfoot>
       </Table>
     </div>
   )

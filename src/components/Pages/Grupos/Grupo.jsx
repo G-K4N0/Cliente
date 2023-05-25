@@ -16,22 +16,32 @@ export const Grupo = () => {
   const [showSucces, setShowSucces] = useState(false)
   const [showError, setShowError] = useState(false)
   const [mensaje, setMensaje] = useState(false)
+  const [totalPages, setTotalPages] = useState(0)
+  const [currentPage, setCurrentPage] = useState(1)
+
   useEffect(() => {
-    axiosPrivate('/grupos')
+    axiosPrivate('/grupos', {
+      params: {
+        page: currentPage,
+        limit: 9
+      }
+    })
       .then((response) => {
         console.log(response.data)
         if (Object.keys(response.data).length === 0) {
           setMensaje('Aún no has grupos para mostrar')
           setShowSucces(true)
         } else {
-          setGrupos(response.data)
+          console.log(response)
+          setGrupos(response?.data?.grupos)
+          setTotalPages(response?.data?.totalPages)
         }
       })
       .catch((error) => {
         setMensaje(error)
         setShowError(true)
       })
-  }, [updateTable, axiosPrivate])
+  }, [updateTable, axiosPrivate, currentPage])
 
   const handleCancel = () => {
     setShowAgregar(false)
@@ -85,20 +95,16 @@ export const Grupo = () => {
   return (
     <div className="container">
       <SuccessAlert
-      mensaje={mensaje}
-      show={showSucces}
-      setShow={setShowSucces}
+        mensaje={mensaje}
+        show={showSucces}
+        setShow={setShowSucces}
       />
-      <ErrorAlert
-      error={mensaje}
-      show={showError}
-      setShow={setShowError}
-      />
+      <ErrorAlert error={mensaje} show={showError} setShow={setShowError} />
       <Editar
-      showEditar={showEditar}
-      setShowEditar={setShowEditar}
-      handleCancelEditar={handleCancelEditar}
-      setUpdateTable={setUpdateTable}
+        showEditar={showEditar}
+        setShowEditar={setShowEditar}
+        handleCancelEditar={handleCancelEditar}
+        setUpdateTable={setUpdateTable}
       />
       <Agregar
         showAgregar={showAgregar}
@@ -106,11 +112,11 @@ export const Grupo = () => {
         handleCancel={handleCancel}
         setUpdateTable={setUpdateTable}
       />
-      <Table responsive striped bordered hover variant="dark">
+      <Table responsive="sm" striped bordered hover variant="dark">
         <thead>
-          <tr>
+          <tr >
             <th style={{ textAlign: 'center' }}>
-            Concluir
+              Concluir
               <div
                 style={{
                   display: 'flex',
@@ -125,7 +131,6 @@ export const Grupo = () => {
                 />
               </div>
             </th>
-
             <th className={`text-center ${styles.encabezado}`}>Grupo</th>
             <th className={`text-center ${styles.encabezado}`}>Carrera</th>
             <th className={`text-center ${styles.encabezado}`}>Semestre</th>
@@ -145,6 +150,31 @@ export const Grupo = () => {
           </tr>
         </thead>
         <tbody>{gruposRender} </tbody>
+        <tfoot>
+          <tr>
+            <td>
+              <Button variant="danger" onClick={() => setSelected([])}>
+                Concluir
+              </Button>
+            </td>
+            <td><Button
+          variant="secondary"
+          onClick={() => setCurrentPage(currentPage - 1)}
+          enabledd={currentPage === totalPages}
+          disabled={currentPage === 1}
+        >
+          Anterior
+        </Button></td>
+        <td><span>{currentPage} de {totalPages}</span></td>
+        <td><Button
+          variant="secondary"
+          onClick={() => setCurrentPage(currentPage + 1)}
+          disabled={currentPage === totalPages}
+        >
+          Siguiente
+        </Button></td>
+          </tr>
+        </tfoot>
       </Table>
     </div>
   )

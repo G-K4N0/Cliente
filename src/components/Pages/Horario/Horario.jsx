@@ -3,6 +3,7 @@ import { Table, Button } from 'react-bootstrap'
 import useAxiosPrivate from '../../../hooks/useAxiosPrivate.js'
 import { ErrorAlert } from '../../Alerts/Error.jsx'
 import { SuccessAlert } from '../../Alerts/Success.jsx'
+import './Horarios.module.scss'
 export function Horario () {
   const axiosPrivate = useAxiosPrivate()
   const [selected, setSelected] = useState([])
@@ -10,16 +11,24 @@ export function Horario () {
   const [showSucces, setShowSucces] = useState(false)
   const [showError, setShowError] = useState(false)
   const [mensaje, setMensaje] = useState('')
+  const [totalPages, setTotalPages] = useState(0)
+  const [currentPage, setCurrentPage] = useState(1)
 
   useEffect(() => {
     axiosPrivate
-      .get('/')
+      .get('/', {
+        params: {
+          page: currentPage,
+          limit: 9
+        }
+      })
       .then((response) => {
         if (Object.keys(response.data).length === 0) {
           setMensaje('Aún no hay datos para mostrar')
           setShowSucces(true)
         } else {
-          setHorarios(response.data)
+          setHorarios(response.data.times)
+          setTotalPages(response.data.totalPages)
         }
       })
       .catch((error) => {
@@ -31,7 +40,7 @@ export function Horario () {
           setShowError(true)
         }
       })
-  }, [axiosPrivate])
+  }, [axiosPrivate, currentPage])
 
   const handleSelectAll = (event) => {
     if (event.target.checked) {
@@ -49,24 +58,34 @@ export function Horario () {
     }
   }
 
+  const updateHorarios = async (actual) => {
+    try {
+      const data = new FormData()
+      data.append('ids', selected)
+      data.append('actual', actual)
+      await axiosPrivate.put('/horarios/update/actual/many', data)
+      setShowSucces(true)
+      setMensaje('Horarios actualizados')
+    } catch (error) {
+      setShowError(true)
+      setMensaje('Error al actualizar los horarios')
+    }
+  }
+
   return (
-    <div className='container'>
+    <div>
       <SuccessAlert
-      mensaje={mensaje}
-      show={showSucces}
-      setShow={setShowSucces}
+        mensaje={mensaje}
+        show={showSucces}
+        setShow={setShowSucces}
       />
-      <ErrorAlert
-      error={mensaje}
-      show={showError}
-      setShow={setShowError}
-      />
-      <Table striped bordered hover responsive variant='dark'>
+      <ErrorAlert error={mensaje} show={showError} setShow={setShowError} />
+      <Table striped bordered hover responsive variant="dark">
         <thead>
           <tr>
             <th>
               <input
-                type='checkbox'
+                type="checkbox"
                 checked={selected.length === horarios.length}
                 onChange={handleSelectAll}
               />
@@ -85,7 +104,7 @@ export function Horario () {
             <tr key={horario.id}>
               <td>
                 <input
-                  type='checkbox'
+                  type="checkbox"
                   checked={selected.includes(horario.id)}
                   onChange={(event) => handleSelect(event, horario.id)}
                 />
@@ -105,14 +124,30 @@ export function Horario () {
         <tfoot>
           <tr>
             <td>
-              <Button variant='danger' onClick={() => setSelected([])}>
-                Concluir horarios
+              <Button variant="danger" onClick={() => updateHorarios(false)}>
+                Concluir
               </Button>
             </td>
+            <td><Button
+          variant="secondary"
+          onClick={() => setCurrentPage(currentPage - 1)}
+          enabledd={currentPage === totalPages}
+          disabled={currentPage === 1}
+        >
+          Anterior
+        </Button></td>
+        <td><span>{currentPage} de {totalPages}</span></td>
+        <td><Button
+          variant="secondary"
+          onClick={() => setCurrentPage(currentPage + 1)}
+          disabled={currentPage === totalPages}
+        >
+          Siguiente
+        </Button></td>
           </tr>
         </tfoot>
       </Table>
-      )
+
     </div>
   )
 }
