@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Modal, Button, Form } from 'react-bootstrap'
-import { axiosPrivate } from '../../../services/AxiosPrivate.js'
+import useAxiosPrivate from '../../../hooks/useAxiosPrivate'
 import { ErrorAlert } from '../../Alerts/Error.jsx'
 import styles from './Registrar.module.scss'
 
@@ -15,27 +15,28 @@ function RegistroUsuario ({ setUpdateTable, showForm, setShowForm }) {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
   const [showError, setShowError] = useState(false)
-  const getPrivilegios = () => {
-    return axiosPrivate
-      .get('/privilegio')
-      .then((response) => {
-        setPrivilegios(response.data)
-        return response
-      })
-      .catch((error) => {
-        if (!error?.response) {
-          setError('El servidor no responsde')
-          setShowError(true)
-        } else if (error.response?.status === 401) {
-          setError('La sesión ha expirado')
-          setShowError(true)
-        }
-      })
-  }
+  const axiosPrivate = useAxiosPrivate()
 
   useEffect(() => {
+    const getPrivilegios = () => {
+      return axiosPrivate
+        .get('/privilegio')
+        .then((response) => {
+          setPrivilegios(response.data)
+          return response
+        })
+        .catch((error) => {
+          if (!error?.response) {
+            setError('El servidor no responsde')
+            setShowError(true)
+          } else if (error.response?.status === 401) {
+            setError('La sesión ha expirado')
+            setShowError(true)
+          }
+        })
+    }
     getPrivilegios()
-  }, [])
+  }, [axiosPrivate])
 
   const handleSubmit = (event) => {
     event.preventDefault()
@@ -152,6 +153,7 @@ function RegistroUsuario ({ setUpdateTable, showForm, setShowForm }) {
               <Form.Label>Seleccionar imagen:</Form.Label>
               <Form.Control
                 type='file'
+                accept='.jpg, .jpeg, .png'
                 onChange={(e) => setImagen(e.target.files[0])}
                 required
               />
