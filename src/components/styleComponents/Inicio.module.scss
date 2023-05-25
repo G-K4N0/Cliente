@@ -12,7 +12,7 @@
     display: grid;
     justify-content: space-between;
     grid-template-columns: repeat(2, 1fr);
-    overflow: scroll;
+    overflow: hidden;
 }
 
 .card{

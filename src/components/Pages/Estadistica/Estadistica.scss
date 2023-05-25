@@ -1,7 +1,21 @@
-.container-custom{
-  overflow: scroll;
+.container-custom {
   height: calc(100vh - 52px);
+  overflow: auto;
 }
+
+.container-custom::-webkit-scrollbar {
+  width: 0.5em;
+  background-color: transparent;
+}
+
+.container-custom::-webkit-scrollbar-thumb {
+  background-color: transparent;
+}
+
+.container-custom::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
 
 .columna {
   width: 100%;

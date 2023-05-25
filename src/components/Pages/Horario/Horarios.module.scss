@@ -1,10 +1,14 @@
 $fondo:#000428;
 $fondoGradiente1: -webkit-linear-gradient(to right, #004e92, #000428);
-$fondoGradiente2: linear-gradient(to right, #004e92, #000428); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+$fondoGradiente2: linear-gradient(to right, #004e92, #000428);
 $naranja:#ff7300;
 $valid:limegreen;
 $invalid: red;
 
+.container-custom-horarios{
+  height: calc(50vh - 50px);
+  background-color: $invalid;
+}
 .formulario {
     margin-top: -2rem;
     margin-left: -0.4rem;
@@ -34,5 +38,3 @@ $invalid: red;
     margin-top: 5px;
     font-size: small;
   }
- 
-  
