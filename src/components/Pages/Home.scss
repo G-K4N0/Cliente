@@ -4,6 +4,19 @@
   grid-template-columns: repeat(2, 1fr);
   height: calc(100vh - 52px);
   min-height: 390px;
-  overflow: hidden;
+  overflow: auto;
   gap: 1rem;
+}
+
+.disposicion::-webkit-scrollbar {
+  width: 0.5em;
+  background-color: transparent;
+}
+
+.disposicion::-webkit-scrollbar-thumb {
+  background-color: transparent;
+}
+
+.disposicion::-webkit-scrollbar-track {
+  background-color: transparent;
 }

@@ -38,7 +38,7 @@ export const Grupo = () => {
         }
       })
       .catch((error) => {
-        setMensaje(error)
+        setMensaje(error.message)
         setShowError(true)
       })
   }, [updateTable, axiosPrivate, currentPage])

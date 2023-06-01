@@ -16,12 +16,9 @@ export function Home () {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      /* const localTime = new Date()
-      const horaActual =
-        localTime.getTime() + localTime.getTimezoneOffset() * 6000 */
       const hora = new Date()
       setTime(hora.toLocaleTimeString('es-MX'))
-    }, 1000)
+    }, 60000)
     return () => clearInterval(interval)
   }, [])
 

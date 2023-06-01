@@ -34,13 +34,14 @@ const renderCustomizedLabel = (props) => {
     <text
       x={ex + (cos >= 0 ? 1 : -1) * 12}
       y={ey}
+      dy={12}
       textAnchor={textAnchor}
       fill={color.verde}
     >{`${payload.name}`}</text>
     <text
       x={ex + (cos >= 0 ? 1 : -1) * 12}
       y={ey}
-      dy={18}
+      dy={25}
       textAnchor={textAnchor}
       fill={color.verde}
     >

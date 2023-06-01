@@ -53,9 +53,6 @@ export function Inicio () {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      /* const localTime = new Date()
-      const horaActual =
-        localTime.getTime() + localTime.getTimezoneOffset() * 6000 */
       const hora = new Date()
       setTime(hora.toLocaleTimeString('es-MX'))
     }, 1000)
@@ -65,18 +62,18 @@ export function Inicio () {
   const elementos =
     horarios.length > 0
       ? (
-          horarios.map((horario, index) => (
+          horarios.map((horarioItem, index) => (
         <Card
-          key={horario.laboratorio + index}
-          laboratorio={horario.laboratorio}
-          materia={horario.materia}
-          inicio={horario.inicia}
-          fin={horario.finaliza}
-          grupo={horario.grupo}
-          status={horario.ocupado}
-          imagen={horario.image.url}
-          carrera={horario.carrera}
-          usuario={horario.docente}
+          key={horarioItem.laboratorio + index}
+          laboratorio={horarioItem.laboratorio}
+          materia={horarioItem.materia}
+          inicio={horarioItem.inicia}
+          fin={horarioItem.finaliza}
+          grupo={horarioItem.grupo}
+          status={horarioItem.ocupado}
+          imagen={horarioItem.image.url}
+          carrera={horarioItem.carrera}
+          usuario={horarioItem.docente}
         />
           ))
         )
@@ -109,6 +106,7 @@ export function Inicio () {
               fin={horario.finaliza}
             />
               )}
+              {console.log(horario)}
         </div>
       </div>
     </div>

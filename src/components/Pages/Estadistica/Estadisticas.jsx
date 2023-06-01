@@ -7,7 +7,7 @@ import './Estadistica.scss'
 import { RegistrosByMes } from './RegistrosByMes'
 
 export function Estadisticas () {
-  const colores = ['#DD2C00', '#FF6D00', '#FFAB00', '#FFD600', '#AEEA00', '#64DD17', '#00C853', '#00BFA5', '#00B8D4', '#0091EA', '#2962FF', '#304FFE', '#6200EA', '#AA00FF', '#C51162', '#D50000']
+  const colores = ['#6200EA', '#FFAB00', '#00BFA5', '#AEEA00', '#64DD17', '#00C853', '#00B8D4', '#0091EA', '#2962FF', '#304FFE', '#AA00FF', '#C51162', '#D50000', '#DD2C00', '#FF6D00', '#FFD600']
   return (
     <div className='container-custom'>
 
