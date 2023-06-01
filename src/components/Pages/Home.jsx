@@ -18,7 +18,7 @@ export function Home () {
     const interval = setInterval(() => {
       const hora = new Date()
       setTime(hora.toLocaleTimeString('es-MX'))
-    }, 60000)
+    }, 1000)
     return () => clearInterval(interval)
   }, [])
 

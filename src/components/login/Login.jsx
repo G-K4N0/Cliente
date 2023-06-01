@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import useAuth from '../../hooks/useAuth'
 import { useNavigate, useLocation } from 'react-router-dom'
-import login from '../../services/login'
+import { login } from '../../api/api.js'
 import styles from '../styleComponents/Login.module.scss'
 
 export const Login = () => {
