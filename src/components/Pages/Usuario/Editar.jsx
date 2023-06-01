@@ -25,7 +25,7 @@ export function Editar (props) {
         })
     }
     getOriginalValues()
-  }, [idUser])
+  }, [idUser, axiosPrivate])
 
   const handleSubmit = async (event) => {
     event.preventDefault()

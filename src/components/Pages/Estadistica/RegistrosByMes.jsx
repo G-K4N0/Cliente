@@ -22,7 +22,7 @@ export const RegistrosByMes = ({ colores }) => {
       .catch((error) => {
         console.log(error)
       })
-  }, [])
+  }, [axiosPrivate])
 
   return (
     <ResponsiveContainer width="100%" height={400}>
