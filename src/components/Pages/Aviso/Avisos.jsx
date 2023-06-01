@@ -2,6 +2,7 @@ import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
 import useAxiosPrivate from '../../../hooks/useAxiosPrivate'
 import { useEffect, useState } from 'react'
+import './Aviso.scss'
 export const Avisos = () => {
   const axiosPrivate = useAxiosPrivate()
   const [reportes, setReportes] = useState([])
@@ -19,9 +20,9 @@ export const Avisos = () => {
   }, [axiosPrivate])
 
   return (
-    <div>
+    <div className='container-cards'>
       {reportes.map((reporte) => (
-        <Card className="w-50" key={reporte.id}>
+        <Card className="w-100" key={reporte.id}>
           <Card.Header>{reporte.usuario.name}</Card.Header>
           <Card.Body>
             <Card.Text>

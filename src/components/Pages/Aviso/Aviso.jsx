@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { Button } from 'react-bootstrap'
 import { Avisos } from './Avisos'
-import { CrearAviso } from './CrearAviso' // Importar el componente CrearAviso
-
+import { CrearAviso } from './CrearAviso'
+import './Aviso.scss'
 export const Aviso = () => {
   const [showAddAviso, setShowAddAviso] = useState(false)
 
@@ -12,10 +12,10 @@ export const Aviso = () => {
 
   return (
     <section className='container'>
-      <div>
+      <div >
         <Button onClick={crearAviso}>Crear aviso</Button>
       </div>
-      <div>
+      <div >
         <CrearAviso show={showAddAviso} onHide={() => setShowAddAviso(false)} />
       </div>
       <div>

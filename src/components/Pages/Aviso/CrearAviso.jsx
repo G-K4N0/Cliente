@@ -35,6 +35,7 @@ export const CrearAviso = ({ show, onHide }) => {
                 placeholder="Ingrese el título"
                 value={titulo}
                 onChange={(e) => setTitulo(e.target.value)}
+                required
               />
             </Form.Group>
             <Form.Group
@@ -46,6 +47,7 @@ export const CrearAviso = ({ show, onHide }) => {
                 placeholder="Ingrese los detalles"
                 value={detalles}
                 onChange={(e) => setDetalles(e.target.value)}
+                required
               />
             </Form.Group>
 
