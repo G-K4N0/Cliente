@@ -8,7 +8,7 @@ export const Login = () => {
   const { setAuth } = useAuth()
   const navigate = useNavigate()
   const location = useLocation()
-  const from = location.state?.from?.pathname || '/dashboard'
+  const from = location.state?.from?.pathname || '/dashboard/inicio'
 
   const [user, setUser] = useState('')
   const [pwd, setPwd] = useState('')
