@@ -1,5 +1,4 @@
-import { useState, useEffect } from 'react'
-import useAxiosPrivate from '../../../hooks/useAxiosPrivate.js'
+import { useState } from 'react'
 import { PieChart, Pie, Sector, ResponsiveContainer } from 'recharts'
 
 const color = { naranja: '#FF6D00', rojo: '#95A5A6', verde: '#FFFF00', darkblue: '#00008B' }
@@ -76,24 +75,11 @@ const renderActiveShape = (props) => {
   )
 }
 
-export const RegistrosByLabs = () => {
+export const RegistrosByLabs = ({ reportes }) => {
   const [activeIndex, setActiveIndex] = useState(0)
-  const axiosPrivate = useAxiosPrivate()
-  const [reportes, setReportes] = useState([])
   const onPieEnter = (_, index) => {
     setActiveIndex(index)
   }
-
-  useEffect(() => {
-    axiosPrivate
-      .get('/registros/conteo/labs')
-      .then((response) => {
-        setReportes(response.data)
-      })
-      .catch((error) => {
-        console.log(error)
-      })
-  }, [axiosPrivate])
 
   return reportes == null
     ? (

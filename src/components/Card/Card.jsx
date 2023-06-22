@@ -15,7 +15,7 @@ export function Card ({
 }) {
   const ocupado = (status === 0) ? 'Libre' : 'Ocupado'
   return (
-    <div className={`container-fluid ${styles.cardContainer}`}>
+    <div className={`container-fluid ${styles.cardContainer} fondo`}>
       <div className={styles.nameLab}>
         <h1>{laboratorio}</h1>
       </div>

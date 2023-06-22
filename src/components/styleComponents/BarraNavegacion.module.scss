@@ -1,19 +1,15 @@
-$fondo:#000428;
-$fondoGradiente1: -webkit-linear-gradient(to right, #004e92, #000428);
-$fondoGradiente2: linear-gradient(to right, #004e92, #000428); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-$naranja:#ff7300;
+$fondo:#1B396A;
+
+$blanco:#FFFFFF;
 .nav_container{
     background: $fondo;
-    background: $fondoGradiente1;
-    background: $fondoGradiente2;
-    border: solid 1px $naranja;
-    border-radius: 0 20px 20px 0;
     height: 3.5rem;
+    border: 1px solid #605b5b;
 }
 
 .Link {
     text-decoration: none;
-    color:$naranja;
+    color:$blanco;
     font-size: medium;
     font-weight: bold;
 }

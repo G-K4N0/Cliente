@@ -1,11 +1,47 @@
 .containerInicio {
-    height: 90vh;
+    height: 93vh;
     width: 100vw;
     display: flex;
-    justify-content: space-between;
+    align-items: center;
+    justify-content: center;
     gap: 1rem;
+  }
+
+  .back{
+    background: rgb(27,57,106);
+    background: linear-gradient(0deg, rgba(27,57,106,1) 85%, rgba(96,91,91,1) 99%); 
+  }
+  .centroTitle {
+  display: block;
+  font-family: monospace;
+  font-weight: bolder;
+  color: aliceblue;
+  font-size: 80px;
+  white-space: nowrap;
+  border-right: 4px solid;
+  width: 18ch;
+
+  animation: typing 5s steps(5) forwards,
+             blink .6s 5s infinite step-end alternate;
+  overflow: hidden;
 }
 
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 17ch;
+  }
+}
+
+@keyframes blink {
+  50% {
+    border-color: transparent;
+  }
+}
+
+  
 .cards{
     width: 60%;
     height: 100%;

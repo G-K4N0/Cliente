@@ -1,37 +1,39 @@
-import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
 import useAxiosPrivate from '../../../hooks/useAxiosPrivate'
 import { useEffect, useState } from 'react'
+import { convertStringToDate } from '../../../services/convertStringToTime'
 import './Aviso.scss'
 export const Avisos = () => {
   const axiosPrivate = useAxiosPrivate()
-  const [reportes, setReportes] = useState([])
+  const [avisos, setAvisos] = useState([])
 
   useEffect(() => {
     axiosPrivate
-      .get('/reportes')
+      .get('/avisos')
       .then((response) => {
-        setReportes(response.data)
-        console.log(response.data)
+        setAvisos(response?.data)
       })
       .catch((error) => {
         console.log(error)
       })
   }, [axiosPrivate])
 
+  const fecha = (fecha) => {
+    return convertStringToDate(fecha)
+  }
+
   return (
     <div className='container-cards'>
-      {reportes.map((reporte) => (
-        <Card className="w-100" key={reporte.id}>
-          <Card.Header>{reporte.usuario.name}</Card.Header>
-          <Card.Body>
+      {avisos.map((aviso, index) => (
+        <Card className="w-100 fondo" key={index}>
+          <Card.Header className='encabezado'>{aviso.titulo}</Card.Header>
+          <Card.Body className='cuerpo'>
             <Card.Text>
-              {reporte.problema}
+              {aviso.detalles}
             </Card.Text>
             <Card.Text>
-              {reporte.descripcion}
+              {fecha(aviso.fecha)}
             </Card.Text>
-            <Button variant="primary">Revisado</Button>
           </Card.Body>
         </Card>
       ))}

@@ -5,13 +5,13 @@ export const CurrentCard = ({ imagen, materia, docente, inicio, fin }) => {
       <div className='image-container'>
         <img className='image container-fluid' src={imagen} alt='Perfil docente'/>
       </div>
-      <div className='titulo'>
+      <div className='titulo fondo'>
         <p>{docente}</p>
       </div>
-      <div className='titulo'>
+      <div className='titulo fondo'>
         <p>{materia}</p>
       </div>
-      <div className='titulo'>
+      <div className='titulo fondo'>
         <p>{inicio} - {fin}</p>
       </div>
     </div>

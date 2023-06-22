@@ -1,154 +1,136 @@
-$fondo:#000428;
-$fondoGradiente1: -webkit-linear-gradient(to right, #004e92, #000428);
-$fondoGradiente2: linear-gradient(to right, #004e92, #000428);
-$naranja:#ff7300;
-$valid:limegreen;
+/* Registrar.module.scss */
+
+// Variables
+$fondo: #000428;
+$naranja: #FFFFFF;
+$valid: limegreen;
 $invalid: red;
 
-.contenedorBoton{
-    width: 100%;
-    float: inline-end;
-    background: red;
-}
+// Estilos del modal
+.container {
+  color: $naranja;
+  background: $fondo;
+  height: calc(100vh - 86px);
+  width: 100%;
+  max-width: 300px;
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
 
-.btnShow{
-    color: $naranja;
-    background:$fondo;
-}
-
-.float{
-    position: fixed;
-    top: 2rem;
-    left: 10rem;
-    padding: 20px;
-}
-
-.container{
-    color: $naranja;
-    background: $fondo;
-    background: $fondoGradiente1;
-    background: $fondoGradiente2;
-    height: calc(100vh - 86px);
-    width: 100%;
-    max-width: 300px;
-    min-height: 400px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 1rem;
-}
-
-.container form {
+  form {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
     flex-grow: 1;
     padding-bottom: 1rem;
-}
 
-.container a, a:visited{
-    color: $naranja;
-}
+    label {
+      margin-top: 1rem;
+    }
 
-.registerForm  {
-    font-family: sans-serif;
-    font-size: 22px;
-    height: 30px;
-    padding: 0.25rem;
-    border-radius: 0.5rem;
-    border: solid 1px $naranja;
-}
+    input[type='text'],
+    input[type='password'],
+    input[type='file'] {
+      font-family: sans-serif;
+      font-size: 22px;
+      height: 30px;
+      padding: 0.25rem;
+      border-radius: 0.5rem;
+      border: solid 1px $naranja;
+      width: 100%;
+      margin-bottom: 0.5rem;
+    }
+  }
 
-.container label, button {
+  button {
     margin-top: 1rem;
-}
-
-.container button {
     padding: 1rem;
-}
-
-.container button:hover {
     color: $naranja;
     background: $fondo;
-    background: $fondoGradiente1;
-    background: $fondoGradiente2;
+
+    &:hover {
+      color: $naranja;
+      background: $fondo;
+    }
+  }
 }
 
 .instructions {
-    font-size: 0.75rem;
-    border-radius: 0.5rem;
-    background: $fondo;
-    color: $naranja;
-    padding: 0.25rem;
-    position: relative;
-    bottom: -10px;
-}
+  font-size: 0.75rem;
+  border-radius: 0.5rem;
+  background: $fondo;
+  color: $naranja;
+  padding: 0.25rem;
+  position: relative;
+  bottom: -10px;
 
-.instructions > svg{
+  svg {
     margin-right: 0.25rem;
+  }
 }
 
-.offscreen{
-    position: absolute;
-    left: -9999px;
+.errmsg {
+  background: lightpink;
+  color: firebrick;
+  font-weight: bold;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
 }
 
-.hide{
-    display: none;
+// Otros estilos
+.contenedorBoton {
+  width: 100%;
+  float: inline-end;
+  background: red;
 }
 
-.valid{
-    color: $valid;
-    margin-left: 0.25rem;
-}
-.invalid{
-    color: $invalid;
-    margin-left: 0.25rem;
+
+.hide {
+  display: none;
 }
 
-.errmsg{
-    background: lightpink;
-    color: firebrick;
-    font-weight: bold;
-    padding: 0.5rem;
-    margin-bottom: 0.5rem;
+.valid {
+  color: $valid;
+  margin-left: 0.25rem;
 }
 
-.line{
-    display: inline-block;
+.invalid {
+  color: $invalid;
+  margin-left: 0.25rem;
 }
 
-.seccionList{
-    width: 100%;
+.line {
+  display: inline-block;
 }
 
-.tablaUsuarios{
-    width: 100%;
+.seccionList {
+  width: 100%;
 }
 
-.rows{
-    background: $fondo;
-    color: $naranja;
+.tablaUsuarios {
+  width: 100%;
 }
 
-.itemTituloNombre{
-    width: 100%;
-    height: 30px;
-    align-items: center;
-    justify-content: center;
-    border-radius: 5px;
-    margin: 0.2rem;
-    color: #000428;
+.rows {
+  background: $fondo;
+  color: $naranja;
 }
 
-.itemUsuario{
-    height: 100px;
-    border-radius: 5px;
-    margin: 0.2rem;
+.itemTituloNombre {
+  width: 100%;
+  height: 30px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  margin: 0.2rem;
+  color: #000428;
 }
 
-.fondo{
-    background: $fondo;
-    color: $naranja;
+.itemUsuario {
+  height: 100px;
+  border-radius: 5px;
+  margin: 0.2rem;
 }

@@ -13,10 +13,10 @@ export const Editar = (props) => {
   return (
     <div>
       <Modal show={props.showModal} onHide={() => props.handleEdit()}>
-        <Modal.Header closeButton>
+        <Modal.Header className='encabezado'>
           <Modal.Title>Editar materia</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body className='cuerpo fondo'>
           <form>
             <label>Laboratorio:</label>
             <input
@@ -26,17 +26,8 @@ export const Editar = (props) => {
               onChange={handleInputChange}
             />
           </form>
-          <form>
-            <label>Disponibilidad:</label>
-            <input
-              type="text"
-              name="labStatus"
-              value={props.newStatusValue}
-              onChange={handleInputChange}
-            />
-          </form>
         </Modal.Body>
-        <Modal.Footer>
+        <Modal.Footer className='fondo'>
           <Button variant="secondary" onClick={props.handleCancel}>
             Cancelar
           </Button>

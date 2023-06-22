@@ -9,10 +9,10 @@ export const Editar = ({ setNewValue, showModal, handleEdit, newValue, handleCan
   return (
     <div>
       <Modal show={showModal} onHide={() => handleEdit()}>
-        <Modal.Header closeButton>
+        <Modal.Header className='encabezado'>
           <Modal.Title>Editar materia</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body className='cuerpo fondo'>
           <form>
             <label>Materia:</label>
             <input
@@ -23,7 +23,7 @@ export const Editar = ({ setNewValue, showModal, handleEdit, newValue, handleCan
             />
           </form>
         </Modal.Body>
-        <Modal.Footer>
+        <Modal.Footer className='fondo'>
           <Button variant="secondary" onClick={handleCancel}>
             Cancelar
           </Button>

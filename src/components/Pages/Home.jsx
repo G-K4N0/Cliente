@@ -51,9 +51,9 @@ export function Home () {
 
   const elementos = horarios.length > 0
     ? (
-        horarios.map((horario) => (
+        horarios.map((horario, index) => (
       <Card
-        key={horario.id}
+        key={index}
         laboratorio={horario.laboratorio}
         materia={horario.materia}
         inicio={horario.inicia}

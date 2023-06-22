@@ -4,7 +4,6 @@ import Button from 'react-bootstrap/Button'
 import { Editar } from './Editar.jsx'
 import { useNavigate } from 'react-router-dom'
 import useAxiosPrivate from '../../../hooks/useAxiosPrivate.js'
-import useAuth from '../../../hooks/useAuth.js'
 import { SuccessAlert } from '../../Alerts/Success.jsx'
 import { ErrorAlert } from '../../Alerts/Error.jsx'
 
@@ -28,8 +27,10 @@ export function Lab () {
         if (Object.keys(response.data).length === 0) {
           setMensaje('Aun no hay datos en la base de datos')
           setShowSucces(true)
+          setRenderTable(false)
         } else {
           setLabs(response?.data)
+          setRenderTable(false)
         }
       })
       .catch((error) => {
@@ -41,15 +42,13 @@ export function Lab () {
           setShowError(true)
         }
       })
-  }, [axiosPrivate])
+  }, [axiosPrivate, renderTable])
 
   const handleEdit = async () => {
     const newName = document.querySelector('input[name="labName"]').value
-    const newStatus = document.querySelector('input[name="labStatus"]').value
     const updateLab = {
       ...labs.find((lab) => lab.id === selectedLabId),
-      name: newName,
-      ocupado: newStatus
+      name: newName
     }
     try {
       const response = await axiosPrivate.put(
@@ -60,7 +59,7 @@ export function Lab () {
         lab.id === selectedLabId ? response.data : lab
       )
       setLabs(updatedLabs)
-      setRenderTable(renderTable)
+      setRenderTable(true)
     } catch (error) {
       if (!error?.response) {
         setMensaje('El servidor no responde')
@@ -102,9 +101,10 @@ export function Lab () {
     if (isOcupado !== true) {
       dataForm.append('ocupado', true)
       axiosPrivate
-        .put(`/labs/${id}`, dataForm, useAuth)
+        .put(`/labs/ocupar/${id}`, dataForm)
         .then((response) => {
           setIsOcupado(true)
+          setRenderTable(true)
         })
         .catch((error) => {
           setMensaje(error.response.data)
@@ -112,9 +112,10 @@ export function Lab () {
     } else {
       dataForm.append('ocupado', false)
       axiosPrivate
-        .put(`/labs/${id}`, dataForm, useAuth)
+        .put(`/labs/ocupar/${id}`, dataForm)
         .then((response) => {
           setIsOcupado(false)
+          setRenderTable(true)
         })
         .catch((error) => {
           if (error.response?.status === 401) {

@@ -1,125 +1,125 @@
-import React, { useState, useEffect } from 'react'
-import { Table, Button } from 'react-bootstrap'
-import useAxiosPrivate from '../../../hooks/useAxiosPrivate'
-import { ErrorAlert } from '../../Alerts/Error'
-import { SuccessAlert } from '../../Alerts/Success'
-import { WarningAlert } from '../../Alerts/Warning'
+import React, { useState, useEffect } from "react";
+import { Table, Button } from "react-bootstrap";
+import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
+import { ErrorAlert } from "../../Alerts/Error";
+import { SuccessAlert } from "../../Alerts/Success";
+import { WarningAlert } from "../../Alerts/Warning";
 
-import styles from './Horarios.module.scss'
+import styles from "./Horarios.module.scss";
 
 export const Agregar = () => {
-  const [inicio, setInicio] = useState('')
-  const [fin, setFin] = useState('')
-  const [dia, setDia] = useState('')
-  const [grupos, setGrupos] = useState([])
-  const [materias, setMaterias] = useState([])
-  const [labs, setLabs] = useState([])
-  const [usuarios, setUsuarios] = useState([])
+  const [inicio, setInicio] = useState("");
+  const [fin, setFin] = useState("");
+  const [dia, setDia] = useState("");
+  const [grupos, setGrupos] = useState([]);
+  const [materias, setMaterias] = useState([]);
+  const [labs, setLabs] = useState([]);
+  const [usuarios, setUsuarios] = useState([]);
 
-  const [seleccionGrupo, setSeleccionGrupo] = useState('')
-  const [seleccionMateria, setSeleccionMateria] = useState('')
-  const [seleccionLab, setSeleccionLab] = useState('')
-  const [seleccioUsuario, setSeleccioUsuario] = useState('')
-  const [mensaje, setMensaje] = useState('')
-  const [showSucces, setShowSucces] = useState(false)
-  const [showError, setShowError] = useState(false)
-  const [showWarning, setShowWarning] = useState(false)
+  const [seleccionGrupo, setSeleccionGrupo] = useState("");
+  const [seleccionMateria, setSeleccionMateria] = useState("");
+  const [seleccionLab, setSeleccionLab] = useState("");
+  const [seleccioUsuario, setSeleccioUsuario] = useState("");
+  const [mensaje, setMensaje] = useState("");
+  const [showSucces, setShowSucces] = useState(false);
+  const [showError, setShowError] = useState(false);
+  const [showWarning, setShowWarning] = useState(false);
 
-  const axiosPrivate = useAxiosPrivate()
+  const axiosPrivate = useAxiosPrivate();
 
   useEffect(() => {
     axiosPrivate
-      .get('/grupos/grupos')
+      .get("/grupos/grupos")
       .then((response) => {
-        setGrupos(response.data)
+        setGrupos(response.data);
       })
       .catch((error) => {
-        console.log(error)
-      })
+        console.log(error);
+      });
     axiosPrivate
-      .get('/materias/addHorario')
+      .get("/materias/addHorario")
       .then((response) => {
-        console.log(response)
-        setMaterias(response?.data?.topic)
+        console.log(response);
+        setMaterias(response?.data?.topic);
       })
       .catch((error) => {
-        console.log(error)
-      })
+        console.log(error);
+      });
     axiosPrivate
-      .get('/labs')
+      .get("/labs")
       .then((response) => {
-        setLabs(response.data)
+        setLabs(response.data);
       })
       .catch((error) => {
-        console.log(error)
-      })
+        console.log(error);
+      });
     axiosPrivate
-      .get('/usuarios/docente')
+      .get("/usuarios/docente")
       .then((response) => {
-        setUsuarios(response.data)
+        setUsuarios(response.data);
       })
       .catch((error) => {
-        console.log(error)
-      })
-  }, [axiosPrivate])
+        console.log(error);
+      });
+  }, [axiosPrivate]);
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    const dataHorario = new FormData()
-    dataHorario.append('inicia', inicio)
-    dataHorario.append('finaliza', fin)
-    dataHorario.append('dia', dia)
-    dataHorario.append('idGrupo', seleccionGrupo)
-    dataHorario.append('idMateria', seleccionMateria)
-    dataHorario.append('idLab', seleccionLab)
-    dataHorario.append('idUsuario', seleccioUsuario)
+    e.preventDefault();
+    const dataHorario = new FormData();
+    dataHorario.append("inicia", inicio);
+    dataHorario.append("finaliza", fin);
+    dataHorario.append("dia", dia);
+    dataHorario.append("idGrupo", seleccionGrupo);
+    dataHorario.append("idMateria", seleccionMateria);
+    dataHorario.append("idLab", seleccionLab);
+    dataHorario.append("idUsuario", seleccioUsuario);
 
     axiosPrivate
-      .post('/horarios/create', dataHorario)
+      .post("/horarios/create", dataHorario)
       .then((response) => {
-        setSeleccionMateria('')
-        setSeleccioUsuario('')
-        setSeleccionGrupo('')
-        setSeleccionLab('')
-        setInicio('')
-        setDia('')
-        setFin('')
-        const message = response.data?.message || ''
+        setSeleccionMateria("");
+        setSeleccioUsuario("");
+        setSeleccionGrupo("");
+        setSeleccionLab("");
+        setInicio("");
+        setDia("");
+        setFin("");
+        const message = response.data?.message || "";
 
         if (
           message.includes(
-            'No puedes agregar la misma hora para el inicio y la finalización'
+            "No puedes agregar la misma hora para el inicio y la finalización"
           )
         ) {
-          setMensaje(message)
-          setShowWarning(true)
-        } else if (message.includes('Existe un horario')) {
-          setMensaje(message)
-          setShowError(true)
-        } else if (message.includes('Incorrect integer value')) {
+          setMensaje(message);
+          setShowWarning(true);
+        } else if (message.includes("Existe un horario")) {
+          setMensaje(message);
+          setShowError(true);
+        } else if (message.includes("Incorrect integer value")) {
           setMensaje(
-            'Revisa que estés seleccionando todas las opciones requeridas'
-          )
-          setShowError(true)
+            "Revisa que estés seleccionando todas las opciones requeridas"
+          );
+          setShowError(true);
         } else if (
-          message.includes('No puedes agregar una hora de finalización pasada')
+          message.includes("No puedes agregar una hora de finalización pasada")
         ) {
-          setMensaje(message)
-          setShowError(true)
+          setMensaje(message);
+          setShowError(true);
         } else if (
           message.includes(
-            'El usuario tiene asignado el mismo horario en el mismo día en otro laboratorio'
+            "El usuario tiene asignado el mismo horario en el mismo día en otro laboratorio"
           )
         ) {
-          setMensaje(message)
-          setShowError(true)
+          setMensaje(message);
+          setShowError(true);
         }
       })
       .catch((error) => {
-        setMensaje(error)
-        setShowError(true)
-      })
-  }
+        setMensaje(error);
+        setShowError(true);
+      });
+  };
   return (
     <div>
       <SuccessAlert
@@ -144,19 +144,19 @@ export const Agregar = () => {
                   onChange={(e) => setInicio(e.target.value)}
                 >
                   <option value="">Entrada</option>
-                  <option value="07:00">07:00</option>
-                  <option value="08:00">08:00</option>
-                  <option value="09:00">09:00</option>
-                  <option value="10:00">10:00</option>
-                  <option value="11:00">11:00</option>
-                  <option value="12:00">12:00</option>
-                  <option value="13:00">13:00</option>
-                  <option value="14:00">14:00</option>
-                  <option value="15:00">15:00</option>
-                  <option value="16:00">16:00</option>
-                  <option value="17:00">17:00</option>
-                  <option value="18:00">18:00</option>
-                  <option value="19:00">19:00</option>
+                  <option value="07:00 AM">07:00 AM</option>
+                  <option value="08:00 AM">08:00 AM</option>
+                  <option value="09:00 AM">09:00 AM</option>
+                  <option value="10:00 AM">10:00 AM</option>
+                  <option value="11:00 AM">11:00 AM</option>
+                  <option value="12:00 PM">12:00 PM</option>
+                  <option value="01:00 PM">01:00 PM</option>
+                  <option value="02:00 PM">02:00 PM</option>
+                  <option value="03:00 PM">03:00 PM</option>
+                  <option value="04:00 PM">04:00 PM</option>
+                  <option value="05:00 PM">05:00 PM</option>
+                  <option value="06:00 PM">06:00 PM</option>
+                  <option value="07:00 PM">07:00 PM</option>
                 </select>
               </th>
               <th>
@@ -166,19 +166,19 @@ export const Agregar = () => {
                   onChange={(e) => setFin(e.target.value)}
                 >
                   <option value="">Salida</option>
-                  <option value="07:00">07:00</option>
-                  <option value="08:00">08:00</option>
-                  <option value="09:00">09:00</option>
-                  <option value="10:00">10:00</option>
-                  <option value="11:00">11:00</option>
-                  <option value="12:00">12:00</option>
-                  <option value="13:00">13:00</option>
-                  <option value="14:00">14:00</option>
-                  <option value="15:00">15:00</option>
-                  <option value="16:00">16:00</option>
-                  <option value="17:00">17:00</option>
-                  <option value="18:00">18:00</option>
-                  <option value="19:00">19:00</option>
+                  <option value="07:00 AM">07:00 AM</option>
+                  <option value="08:00 AM">08:00 AM</option>
+                  <option value="09:00 AM">09:00 AM</option>
+                  <option value="10:00 AM">10:00 AM</option>
+                  <option value="11:00 AM">11:00 AM</option>
+                  <option value="12:00 PM">12:00 PM</option>
+                  <option value="01:00 PM">01:00 PM</option>
+                  <option value="02:00 PM">02:00 PM</option>
+                  <option value="03:00 PM">03:00 PM</option>
+                  <option value="04:00 PM">04:00 PM</option>
+                  <option value="05:00 PM">05:00 PM</option>
+                  <option value="06:00 PM">06:00 PM</option>
+                  <option value="07:00 PM">07:00 PM</option>
                 </select>
               </th>
               <th>
@@ -275,5 +275,5 @@ export const Agregar = () => {
         </Table>
       </form>
     </div>
-  )
-}
+  );
+};

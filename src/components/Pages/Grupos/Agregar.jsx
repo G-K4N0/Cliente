@@ -98,8 +98,8 @@ export const Agregar = ({ setUpdateTable, showAgregar, handleCancel, setShowAgre
         show={showAgregar}
         onHide={handleAgregar}
       >
-        <Modal.Title className={`${styles.fondo} ${styles.titulo}`}>Agregar</Modal.Title>
-        <Modal.Body className={styles.fondo}>
+        <Modal.Title className='fondo encabezado'>Agregar Grupo</Modal.Title>
+        <Modal.Body className='cuerpo fondo'>
           <Form>
             <Form.Group controlId="grupo">
               <Form.Label>Grupo</Form.Label>

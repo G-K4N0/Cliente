@@ -14,6 +14,7 @@ import { Inicio } from './components/home/Inicio'
 import { Usuario } from './components/Pages/Usuario/Usuario'
 import { Grupos } from './components/Pages/Grupos/Grupos'
 import { NotFound } from './components/NotFound/NotFound'
+import { Reportes } from './components/Pages/Reportes/Reportes'
 import RequireAuth from './context/RequireAuth'
 import PersistLogin from './context/PersistLogin'
 
@@ -36,6 +37,7 @@ function App () {
                 <Route path="labs" exact={true} element={<Labs />} />
                 <Route path="horarios" exact={true} element={<Horarios />} />
                 <Route path="avisos" exact={true} element={<Aviso />} />
+                <Route path="reportes" exact={true} element={<Reportes />} />
                 <Route path="estadisticas" exact={true} element={<Estadisticas />}/>
               </Route>
             </Route>

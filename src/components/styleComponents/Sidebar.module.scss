@@ -1,10 +1,8 @@
-$naranja:#ff7300;
+$blanco:#FFFFFF;
 $ancho:200px;
 $alto:100%;
 $borde:#c4ccde;
-$fondo:#000428;
-$fondoGradiente1: -webkit-linear-gradient(to right, #004e92, #000428);
-$fondoGradiente2: linear-gradient(to right, #004e92, #000428);
+$fondo:#1B396A;
 .container
 {
     display: flex;
@@ -24,7 +22,7 @@ $fondoGradiente2: linear-gradient(to right, #004e92, #000428);
             margin-bottom: 1rem;
             a{
                 text-decoration: none;
-                color: $naranja;
+                color: $blanco;
             }
         }
     }

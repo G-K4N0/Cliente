@@ -10,6 +10,7 @@ export function Sidebar () {
           <li> <Link to="labs"> Labroratorios </Link></li>
           <li> <Link to="horarios"> Horarios </Link></li>
           <li> <Link to="avisos"> Avisos </Link></li>
+          <li> <Link to="reportes"> Reportes </Link></li>
           <li> <Link to="estadisticas"> Estadisticas </Link></li>
         </ul>
     </div>

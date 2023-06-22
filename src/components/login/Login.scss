@@ -1,0 +1,147 @@
+$fondo:#1b396a;
+$fondoAlterno:#605b5b;
+$blanco:#FFFFFF;
+$valid:limegreen;
+$invalid: red;
+$inputColor:#BDBDBD;
+@import url('https://fonts.googleapis.com/css?family=Abel|Abril+Fatface|Alegreya|Arima+Madurai|Dancing+Script|Dosis|Merriweather|Oleo+Script|Overlock|PT+Serif|Pacifico|Playball|Playfair+Display|Share|Unica+One|Vibur');
+
+
+$inputColor: #BDBDBD;
+
+.overlay {
+  height: 100vh;
+  background: #1b396a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Vibur', cursive;
+  font-family: 'Abel', sans-serif;
+}
+
+.input_item_eye {
+  color: $fondo;
+  border-radius: 5px 0px 0px 5px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding-right: 10px;
+}
+
+.input_item_eye i {
+  cursor: pointer;
+}
+
+.centerImage {
+  display: block;
+  text-align: center;
+}
+
+.input-wrapper {
+  position: relative;
+}
+
+.formulario {
+  width: 450px;
+  min-height: 500px;
+  height: auto;
+  border-radius: 5px;
+  margin: 3% auto;
+  border: 2px #ffffff;
+  box-shadow: 0 9px 50px hsla(20, 67%, 75%, 0.31);
+  background: #605b5b;
+}
+
+.con {
+  display: flex;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin: 1rem auto;
+}
+
+.errMsg {
+  color: #FFFFFF;
+}
+
+.head_form {
+  margin: 1% auto 5% auto;
+  text-align: center;
+}
+
+.head_form h2 {
+  margin-top: 2rem;
+  font-size: 250%;
+  font-family: 'Playfair Display', serif;
+  color: #FFFFFF;
+}
+
+.head_form p {
+  letter-spacing: 0.05em;
+}
+
+.input_item {
+  color: $fondo;
+  padding: 21.5px 5px 16.5px 12px;
+  border-radius: 5px 0px 0px 5px;
+  position: absolute;
+  display: flex;
+  align-items: center;
+}
+
+.form_input {
+  width: 280px;
+  height: 51px;
+  text-align: center;
+  margin-top: 2%;
+  padding: 14px;
+  font-size: 16px;
+  font-family: 'Abel', sans-serif;
+  outline: none;
+  border: none;
+  border-radius: 0px 5px 5px 0px;
+  transition: 0.2s linear;
+  background: $inputColor;
+}
+
+.txt_input {
+  width: 280px;
+}
+
+.button_login {
+  display: inline-block;
+  color: #FFFFFF;
+  width: 280px;
+  height: 3.5rem;
+  padding: 0 20px;
+  background: #1b396a;
+  border-radius: 5px;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.2s linear;
+  margin: 7% auto;
+  letter-spacing: 0.05em;
+  border: 1px solid #FFFFFF;
+}
+
+.submits {
+  width: 48%;
+  display: inline-block;
+  margin-left: 2%;
+}
+
+@keyframes ani9 {
+  0% {
+    transform: translateY(3px);
+  }
+  100% {
+    transform: translateY(5px);
+  }
+}
