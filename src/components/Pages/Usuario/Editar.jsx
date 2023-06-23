@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { Modal, Button, Form} from 'react-bootstrap';
-import styles from './Registrar.module.scss';
 import useAxiosPrivate from '../../../hooks/useAxiosPrivate';
 
 export function Editar(props) {

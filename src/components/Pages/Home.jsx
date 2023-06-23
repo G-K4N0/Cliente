@@ -67,7 +67,7 @@ export function Home () {
         ))
       )
     : (
-    <h1>No hay horarios en Home</h1>
+    <h1 className='aviso'>No hay mas horarios</h1>
       )
 
   return (
